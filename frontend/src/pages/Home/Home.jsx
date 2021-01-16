@@ -1,47 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import StoreContext from '../../components/store/Context'
-import { useHistory } from 'react-router-dom';
-import roleNames from '../../utils/permissionLevel';
-import { Button, Header } from 'semantic-ui-react'
-// import { If } from '../../components/If/If';
+import { Header } from 'semantic-ui-react'
 import './Home.css';
 import axios from 'axios';
 import { Api } from '../../utils/apiData'
-import { Produto } from '../../components/Produto/Produto'
+import { CompProduto } from '../../components/Produto/CompProduto'
 import { PageCenter } from '../../components/PageCenter/PageCenter'
 import { PageHeader } from '../../components/PageHeader/PageHeader';
+import Produto from '../../classes/Produto'
+// import { CarrinhoCompras } from '../../components/CarrinhoCompras/CarrinhoCompras';
 
 const PagesHome = () => {
-    const { setToken, setRole } = useContext( StoreContext );
-    const [ produtos, setProdutos ] = useState( [] );
-    const history = useHistory();
+    const { setProdutos } = useContext( StoreContext );
 
-    function onSubmitLogin () {
-        // setToken( null );
-        return history.push( '/login' );
-    }
-
-    function onSubmitUser () {
-        return history.push( '/perfil' );
-    }
-
-    function onSubmitAdmin () {
-        return history.push( '/gerenciar' );
-    }
-
-    function onSubmitHome () {
-        setToken( null );
-        setRole( roleNames.DEFAULT );
-        return history.push( '/' );
-    }
 
     useEffect( () => {
         const fetchData = async () => {
             try {
                 const res = await axios.get( Api.url + Api.produto );
-                // console.log( res.data );
-                setProdutos( res.data );
-                // console.log( produtos );
+                const resProdutos = res.data;
+                // console.log( listaProdutos );
+                const listaProdutos = resProdutos.map( ( produto ) => {
+                    const prodObj = new Produto(
+                        produto.id,
+                        produto.nome,
+                        produto.preco,
+                        produto.imgSrc,
+                        produto.descricao,
+                        produto.quantidade
+                    );
+                    return prodObj;
+                } );
+
+                // setProdutos( res.data );
+                setProdutos( listaProdutos );
             }
             catch ( err ) {
                 const error = 'Erro app -> buscandoProdutos; Erro: ' + err;
@@ -56,7 +48,7 @@ const PagesHome = () => {
         <PageCenter>
             <PageHeader />
             <Header className='homeTitle' as="h1">Loja</Header>
-            <Produto produtos={ produtos } />
+            <CompProduto />
         </PageCenter>
     );
 }

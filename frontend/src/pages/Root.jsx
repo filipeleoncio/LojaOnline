@@ -11,25 +11,7 @@ import AccessDenied from './AccessDenied/AccessDenied'
 // import AccessDenied from './AccessDenied/AccessDenied'
 import roleNames from '../utils/permissionLevel';
 import { Cadastro } from './Cadastro/Cadastro';
-
-
-// function PagesRoot () {
-//     return (
-//         <Router>
-//             <StoreProvider>
-//                 <Switch>
-//                     <Route path="/login" component={ Login } />
-//                     <Route path="/" component={ Home } />
-//                     {/* <RoutesPrivate requiredRole={ roleNames.USER } path="/perfil" component={ Profile } />
-//                     <RoutesPrivate requiredRole={ roleNames.ADMIN } path="/gerenciar" component={ Management } /> */}
-//                     <RoutesPrivate path="/perfil" component={ Profile } />
-//                     <RoutesPrivate path="/gerenciar" component={ Management } />
-//                 </Switch>
-//             </StoreProvider>
-//         </Router>
-//     );
-// }
-
+import Carrinho from './Carrinho/Carrinho';
 
 const PagesRoot = () => (
     <Router>
@@ -39,7 +21,8 @@ const PagesRoot = () => (
                 <Route path="/accessdenied" component={ AccessDenied } />
                 <RoutesPrivate requiredRole={ roleNames.DEFAULT } path="/" exact={ true } component={ Home } />
                 <RoutesPrivate requiredRole={ roleNames.DEFAULT } path="/cadastro" component={ Cadastro } />
-                <RoutesPrivate requiredRole={ roleNames.USER } path="/perfil" component={ Profile } />
+                <RoutesPrivate requiredRole={ roleNames.USER } path="/perfil" exact={ true } component={ Profile } />
+                <RoutesPrivate requiredRole={ roleNames.USER } path="/perfil/carrinho" component={ Carrinho } />
                 <RoutesPrivate requiredRole={ roleNames.ADMIN } path="/gerenciar" component={ Management } />
             </Switch>
         </StoreProvider>

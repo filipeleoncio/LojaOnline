@@ -6,6 +6,7 @@ const StoreProvider = ( { children } ) => {
     const [ token, setToken ] = useStorage( 'token' );
     const [ role, setRole ] = useStorage( 'role' );
     const [ produtos, setProdutos ] = useStorage( 'produtos' );
+    const [ carrinho, setCarrinho ] = useStorage( 'carrinho' );
     return (
         <Context.Provider
             value={ {
@@ -14,7 +15,9 @@ const StoreProvider = ( { children } ) => {
                 role,
                 setRole,
                 produtos,
-                setProdutos
+                setProdutos,
+                carrinho,
+                setCarrinho,
             } }
         >
             {children }

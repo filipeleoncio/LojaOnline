@@ -3,6 +3,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom';
 import { PageCenter } from '../../components/PageCenter/PageCenter';
 import { Button, Header } from 'semantic-ui-react';
+import { PageHeader } from '../../components/PageHeader/PageHeader';
 
 // function PagesProfile () {
 //     const { setToken } = useContext( StoreContext );
@@ -24,14 +25,15 @@ const PagesProfile = () => {
     // const { setToken } = useContext( StoreContext );
     const history = useHistory();
 
-    function onSubmitHome () {
-        return history.push( '/' );
+    function onButtonClick () {
+        return history.push( '/perfil/carrinho' );
     }
 
     return (
         <PageCenter>
-            <Header>Pagina do Usuario</Header>
-            <Button onClick={ onSubmitHome }>Pagina inicial</Button>
+            <PageHeader />
+            <Header as='h1' textAlign='center'>Pagina do Usuario</Header>
+            <Button onClick={ onButtonClick }>Carrinho de Compras</Button>
         </PageCenter>
     );
 }

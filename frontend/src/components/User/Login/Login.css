@@ -27,6 +27,11 @@
     text-align: center;
 }
 
-a:hover{
+p{
+    color: rgb(74, 74, 255);
+}
+
+p:hover{
     color: green;
+    cursor: pointer;
 }

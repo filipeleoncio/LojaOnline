@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Form, Header, Input, Label, Image, Dimmer } from 'semantic-ui-react';
 import { If } from '../../components/If/If';
 import { PageCenter } from '../../components/PageCenter/PageCenter'
+import { PageHeader } from '../../components/PageHeader/PageHeader';
 import StoreContext from '../../components/store/Context';
 import { Api } from '../../utils/apiData'
 import roleNames from '../../utils/permissionLevel';
@@ -180,7 +181,8 @@ export const Cadastro = () => {
     return (
         <div>
             <PageCenter>
-                <Header as='h1' className="centralize">Cadastro</Header>
+                <PageHeader />
+                <Header as='h1' textAlign='center'>Cadastro</Header>
                 <Form onSubmit={ onSubmit }>
                     <Form.Group>
                         <Form.Field

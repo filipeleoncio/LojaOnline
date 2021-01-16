@@ -7,7 +7,9 @@ const StoreContext = createContext( {
     role: roleNames.DEFAULT,
     setRole: () => { },
     produtos: [],
-    setProdutos: () => { }
+    setProdutos: () => { },
+    carrinho: [],
+    setCarrinho: () => { },
 } );
 
 export default StoreContext;

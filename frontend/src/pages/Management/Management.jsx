@@ -3,15 +3,12 @@ import React from 'react'
 import { useHistory } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
 import { PageCenter } from '../../components/PageCenter/PageCenter'
+import { PageHeader } from '../../components/PageHeader/PageHeader';
 
 // function PagesManagement () {
 const PagesManagement = () => {
     // const { setToken } = useContext( StoreContext );
     const history = useHistory();
-
-    function onSubmit () {
-        return history.push( '/' );
-    }
 
     function onSubmitCadastro () {
         return history.push( '/cadastro' );
@@ -19,9 +16,9 @@ const PagesManagement = () => {
 
     return (
         <PageCenter>
-            <Header>Pagina de gerenciamento</Header>
+            <PageHeader />
+            <Header as='h1' textAlign='center'>Pagina de gerenciamento</Header>
             <Button onClick={ onSubmitCadastro }>Cadastrar Usuário</Button>
-            <Button onClick={ onSubmit }>Pagina inicial</Button>
         </PageCenter >
     );
 }

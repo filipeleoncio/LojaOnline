@@ -7,6 +7,7 @@ import './Login.css';
 import roleNames from '../../../utils/permissionLevel';
 import { Api } from '../../../utils/apiData';
 import { PageCenter } from '../../PageCenter/PageCenter';
+import { PageHeader } from '../../PageHeader/PageHeader';
 
 function getRoleCode ( role ) {
     switch ( role ) {
@@ -45,7 +46,7 @@ async function verificaLogin ( { user, password } ) {
 const UserLogin = () => {
     const [ values, setValues ] = useState( initialState );
     const [ showError, setShowError ] = useState( false );
-    const { setToken, setRole } = useContext( StoreContext );
+    const { setToken, setRole, setCarrinho } = useContext( StoreContext );
     const history = useHistory();
 
     function onChange ( event ) {
@@ -83,6 +84,7 @@ const UserLogin = () => {
             if ( token ) {
                 setToken( token );
                 setRole( getRoleCode( role ) );
+                setCarrinho( [] );
                 return history.push( '/' );
             }
         }
@@ -90,8 +92,13 @@ const UserLogin = () => {
         setValues( initialState );
     }
 
+    function onClick () {
+        return history.push( '/cadastro' );
+    }
+
     return (
         <PageCenter >
+            <PageHeader />
             <div className="user-login">
                 <h1 className="user-login__title">Login</h1>
                 <Form onSubmit={ onSubmit }>
@@ -106,7 +113,7 @@ const UserLogin = () => {
                         error={ showError && <Label content='Usuario ou senha incorretos' /> }
                     />
                     <Form.Field className="centralize">
-                        <a href="/cadastro">Não possui uma conta? Faça seu cadastro</a>
+                        <p onClick={ onClick } >Não possui uma conta? Faça seu cadastro</p>
                     </Form.Field>
                     <Form.Field className="user-login_button"
                         control={ Button } type='submit' content='Entrar'

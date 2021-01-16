@@ -1,0 +1,19 @@
+.centered{
+    text-align: center !important;
+}
+
+Button{
+    cursor: pointer;
+}
+
+img:hover{
+    cursor: pointer;
+}
+
+.boxQuantidade{
+    padding-top: 16% !important;
+}
+
+.botaoFinalizarPedido{
+    margin-right: -1px !important;
+}

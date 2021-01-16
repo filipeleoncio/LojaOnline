@@ -1,27 +1,17 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom';
 import { PageCenter } from '../../components/PageCenter/PageCenter';
-import { Button, Header } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
+import { PageHeader } from '../../components/PageHeader/PageHeader';
 
 const PagesAccessDenied = () => {
     // const { setToken } = useContext( StoreContext );
-    const history = useHistory();
-
-    function onSubmitHome () {
-        // setToken( null );
-        return history.push( '/' );
-    }
-
-    function onSubmitLogin () {
-        // setToken( null );
-        return history.push( '/login' );
-    }
+    // const history = useHistory();
 
     return (
         <PageCenter>
-            <Header>Acesso Negado</Header>
-            <Button onClick={ onSubmitHome }>Pagina inicial</Button>
-            <Button onClick={ onSubmitLogin }>Pagina de Login</Button>
+            <PageHeader />
+            <Header as='h1' textAlign='center'>Acesso Negado</Header>
+            <Header as='h3' textAlign='center'>Você não tem permissão para acessar essa página</Header>
         </PageCenter>
     );
 }
