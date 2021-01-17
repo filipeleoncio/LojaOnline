@@ -4,5 +4,6 @@ export const Api = {
     autenticacao: '/autenticacao',
     usuario: '/usuario',
     produto: '/produto',
-    verificarUsername: ( username ) => `/usuario/verificaUsername?username=${ username }`
+    verificarUsername: ( username ) => `/usuario/verificaUsername?username=${ username }`,
+    verificaNomeProduto: ( nomeProduto ) => `/produto/verificaNomeProduto?nomeProduto=${ nomeProduto }`
 };

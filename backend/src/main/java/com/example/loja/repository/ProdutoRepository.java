@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends CrudRepository<Produto, Integer> {
     public List<Produto> findAll();
-    //public List<Produto> saveAll(List<Produto> produtos);
+    public Produto findByNome(String nomeProduto);
 }

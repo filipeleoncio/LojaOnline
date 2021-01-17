@@ -1,5 +1,7 @@
 package com.example.loja.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,6 +21,8 @@ public class Produto {
     private String descricao;
 
     private Integer quantidade;
+
+    public MultipartFile img;
 
     public Integer getQuantidade() {
         return quantidade;
@@ -67,4 +71,5 @@ public class Produto {
     public void setImgSrc(String imgSrc) {
         this.imgSrc = imgSrc;
     }
+
 }

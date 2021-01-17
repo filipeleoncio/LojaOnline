@@ -5,13 +5,15 @@ import roleNames from '../../utils/permissionLevel';
 import StoreContext from '../store/Context';
 
 export const MenuItemCustom = ( { path, input } ) => {
-    const { setRole, setToken } = useContext( StoreContext );
+    const { setRole, setToken, setCarrinho, setLogoutRealizado } = useContext( StoreContext );
     const history = useHistory();
 
     function onClick () {
         if ( input === 'Logout' ) {
             setToken( null );
             setRole( roleNames.DEFAULT );
+            setCarrinho( [] );
+            setLogoutRealizado( true );
         }
         return history.push( path );
     }

@@ -40,4 +40,9 @@ public class ProdutoServiceImpl implements ProdutoService {
         return resultado;
         //return produtoRepository.saveAll(produtos);
     }
+
+    @Override
+    public Produto consultarProdutoPorNome(String nomeProduto) {
+        return produtoRepository.findByNome(nomeProduto);
+    }
 }

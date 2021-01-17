@@ -9,4 +9,5 @@ public interface ProdutoService {
     public Produto salvarProduto(Produto produto);
     public List<Produto> buscarProdutos();
     public List<Produto> salvarListaProdutos(List<Produto> produto);
+    public Produto consultarProdutoPorNome(String nomeProduto);
 }

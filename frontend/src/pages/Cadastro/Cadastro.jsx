@@ -1,20 +1,15 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Header, Input, Label, Image, Dimmer } from 'semantic-ui-react';
 import { If } from '../../components/If/If';
-import { PageCenter } from '../../components/PageCenter/PageCenter'
+import { PageCenter } from '../../components/PageCenter/PageCenter';
 import { PageHeader } from '../../components/PageHeader/PageHeader';
 import StoreContext from '../../components/store/Context';
-import { Api } from '../../utils/apiData'
+import { Api } from '../../utils/apiData';
+import { check } from '../../utils/check';
 import roleNames from '../../utils/permissionLevel';
 import { timeout } from '../../utils/timeout';
-
-const check = {
-    // green: 'https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-green-check-mark-icon-flat-style-png-image_1986021.jpg',
-    green: 'https://banner2.cleanpng.com/20180329/cvq/kisspng-check-mark-computer-icons-clip-art-feedback-button-5abda2bf2e5f03.10222752152237740719.jpg',
-    red: 'https://img.favpng.com/12/24/4/red-x-x-mark-computer-icons-clip-art-png-favpng-fQcTS7Ae10badG37Km4sybF3X.jpg'
-}
 
 function initialStateValues () {
     return {
@@ -53,11 +48,37 @@ async function verificaNomeDeUsuario ( userName ) {
 export const Cadastro = () => {
     const [ values, setValues ] = useState( initialStateValues );
     const [ verify, setVerify ] = useState( initialStateVerify );
-    // const [ newRole, setNewRole ] = useState( 'USER' );
-    // const [ checkboxActive, setCheckboxActive ] = useState( false );
     const [ activeDimmer, setActiveDimmer ] = useState( false );
     const history = useHistory();
     const { role } = useContext( StoreContext );
+
+    useEffect( () => {
+        async function atualizaCheck ( verify ) {
+            const username = values.userName;
+            if ( username === '' ) {
+                setVerify( {
+                    ...verify,
+                    'userName': '',
+                } );
+            }
+            else {
+                const res = await verificaNomeDeUsuario( username );
+                if ( res ) {
+                    setVerify( {
+                        ...verify,
+                        'userName': check.red,
+                    } );
+                }
+                else {
+                    setVerify( {
+                        ...verify,
+                        'userName': check.green,
+                    } );
+                }
+            }
+        }
+        atualizaCheck();
+    }, [ values.userName ] );
 
     async function onChange ( event ) {
         const { value, name } = event.target;
@@ -66,32 +87,6 @@ export const Cadastro = () => {
             ...values,
             [ name ]: value,
         } );
-
-
-        //vira useEffect
-        if ( name === 'userName' ) {
-            if ( value === '' ) {
-                setVerify( {
-                    ...verify,
-                    [ name ]: '',
-                } );
-            }
-            else {
-                const res = await verificaNomeDeUsuario( value );
-                if ( res ) {
-                    setVerify( {
-                        ...verify,
-                        [ name ]: check.red,
-                    } );
-                }
-                else {
-                    setVerify( {
-                        ...verify,
-                        [ name ]: check.green,
-                    } );
-                }
-            }
-        }
     }
 
     function onChangeRole ( event ) {
@@ -101,70 +96,11 @@ export const Cadastro = () => {
         } );
     }
 
-    // function changeRole ( event ) {
-    //     setCheckboxActive( !checkboxActive );
-    //     // console.log( "fora:", checkboxActive );
-
-    //     console.log( "fora: ", newRole );
-
-    //     // await alteraCheckBoxActive( !checkboxActive );
-    //     // const newRole = checkboxActive ? 'ADMIN' : 'USER';
-    //     // console.log( "dentro:", checkboxActive );
-    //     // await alteraValues( newRole );
-    //     // console.log( "new role: ", values.role );
-    // }
-
-
-    // async function alteraValues ( newRole ) {
-    //     return new Promise( ( resolve ) => setValues( { ...values, role: newRole }, resolve ) );
-    // }
-
-    // async function alteraCheckBoxActive ( newState ) {
-    //     return new Promise( ( resolve ) => setCheckboxActive( newState, resolve ) );
-    // }
-
-    // useEffect( () => {
-    //     console.log( "Values role(att): ", values.role );
-    // }, [ setValues, values.role ]
-    // );
-
-    // async function alteraValues ( newRole ) {
-    // const alteraValues = useCallback( async ( newRole ) => {
-    //     return ( ( resolve ) => setValues( { ...values, role: newRole }, resolve ) );
-    // } );
-
-    // useEffect( () => {
-    //     const role = checkboxActive ? 'ADMIN' : 'USER';
-    //     console.log( checkboxActive );
-    //     console.log( role );
-    //     setNewRole( role );
-    //     // await alteraValues( newRole );
-    //     // setValues( {
-    //     //     ...values,
-    //     //     role: newRole,
-    //     // } );
-
-    // }, [ checkboxActive ]
-    // );
-
-
     async function onSubmit ( event ) {
         if ( values.password !== values.passwordC || await verificaNomeDeUsuario( values.userName ) ) {
             return null;
         }
-
-        // const newRole = checkboxActive ? 'ADMIN' : 'USER';
-
-        // setValues( {
-        //     ...values,
-        //     role: newRole,
-        // } );
-
-        console.log( values );
-
         try {
-            // if ( values.role === '' )
-            //     console.log( "role:", role );
             await axios.post( Api.url + Api.usuario, values );
         }
         catch ( err ) {
@@ -174,7 +110,7 @@ export const Cadastro = () => {
         }
 
         setActiveDimmer( true );
-        await timeout( 2000 );
+        await timeout( 1000 );
         return history.push( '/' );
     }
 

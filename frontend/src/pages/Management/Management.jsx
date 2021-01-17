@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 // import StoreContext from '../../components/store/Context'
 import { useHistory } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
@@ -10,15 +10,16 @@ const PagesManagement = () => {
     // const { setToken } = useContext( StoreContext );
     const history = useHistory();
 
-    function onSubmitCadastro () {
-        return history.push( '/cadastro' );
+    function onSubmit ( path ) {
+        return history.push( path );
     }
 
     return (
         <PageCenter>
             <PageHeader />
             <Header as='h1' textAlign='center'>Pagina de gerenciamento</Header>
-            <Button onClick={ onSubmitCadastro }>Cadastrar Usuário</Button>
+            <Button onClick={ () => onSubmit( '/cadastro' ) }>Cadastrar Usuário</Button>
+            <Button onClick={ () => onSubmit( '/cadastrarProduto' ) }>Cadastrar Produto</Button>
         </PageCenter >
     );
 }

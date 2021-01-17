@@ -10,6 +10,8 @@ const StoreContext = createContext( {
     setProdutos: () => { },
     carrinho: [],
     setCarrinho: () => { },
+    logoutRealizado: false,
+    setLogoutRealizado: () => { },
 } );
 
 export default StoreContext;

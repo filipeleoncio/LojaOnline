@@ -24,9 +24,17 @@ public class ProdutoResource {
         return produtoService.buscarProdutos();
     }
 
+    @GetMapping("/verificaNomeProduto")
+    public Boolean verificaUsername(@RequestParam String nomeProduto){
+        if(produtoService.consultarProdutoPorNome(nomeProduto) != null)
+            return true;
+        return false;
+    }
+
     //@Secured("ADMIN")
     @PostMapping
     public Produto salvarProduto(@RequestBody Produto produto){
+        //produto.img (Multipart file)
         return produtoService.salvarProduto(produto);
     }
 
