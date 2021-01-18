@@ -2,11 +2,10 @@ import React, { useContext } from 'react';
 import { Menu } from 'semantic-ui-react';
 import roleNames from '../../utils/permissionLevel';
 import StoreContext from '../store/Context';
-import { MenuItemCustom } from './MenuItemCustom';
+import MenuItemCustom from './MenuItemCustom';
 
-export const PageHeader = () => {
+const PageHeader = () => {
     const { role } = useContext( StoreContext );
-    // const history = useHistory();
 
     function menuPathLogin () {
         if ( role === roleNames.DEFAULT )
@@ -29,3 +28,5 @@ export const PageHeader = () => {
         </Menu>
     );
 }
+
+export default PageHeader;

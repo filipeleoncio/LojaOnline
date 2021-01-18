@@ -4,7 +4,7 @@ import { Header, Menu } from 'semantic-ui-react';
 import roleNames from '../../utils/permissionLevel';
 import StoreContext from '../store/Context';
 
-export const MenuItemCustom = ( { path, input } ) => {
+const MenuItemCustom = ( { path, input } ) => {
     const { setRole, setToken, setCarrinho, setLogoutRealizado } = useContext( StoreContext );
     const history = useHistory();
 
@@ -24,3 +24,5 @@ export const MenuItemCustom = ( { path, input } ) => {
         </Menu.Item>
     );
 }
+
+export default MenuItemCustom;

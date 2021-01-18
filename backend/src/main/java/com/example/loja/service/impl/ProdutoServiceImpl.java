@@ -2,7 +2,6 @@ package com.example.loja.service.impl;
 
 import com.example.loja.model.Produto;
 import com.example.loja.repository.ProdutoRepository;
-import com.example.loja.repository.UsuarioRepository;
 import com.example.loja.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +18,17 @@ public class ProdutoServiceImpl implements ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
+    @Override
     public Produto salvarProduto(Produto produto) {
         return produtoRepository.save(produto);
     }
 
+    @Override
     public List<Produto> buscarProdutos() {
         return produtoRepository.findAll();
     }
 
+    @Override
     public List<Produto> salvarListaProdutos(List<Produto> produtos) {
         List<Produto> resultado = new ArrayList<>();
 
@@ -38,7 +40,6 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
 
         return resultado;
-        //return produtoRepository.saveAll(produtos);
     }
 
     @Override

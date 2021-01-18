@@ -3,8 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Header, Input, Label, Image, Dimmer } from 'semantic-ui-react';
 import { If } from '../../components/If/If';
-import { PageCenter } from '../../components/PageCenter/PageCenter';
-import { PageHeader } from '../../components/PageHeader/PageHeader';
+import PageCenter from '../../components/PageCenter/PageCenter';
+import PageHeader from '../../components/PageHeader/PageHeader';
 import StoreContext from '../../components/store/Context';
 import { Api } from '../../utils/apiData';
 import { check } from '../../utils/check';
@@ -30,6 +30,10 @@ function initialStateVerify () {
     }
 }
 
+/**
+ * @Summary Verifica se nome de usuário já esta cadastrado
+ * @param userName
+ */
 async function verificaNomeDeUsuario ( userName ) {
     if ( userName !== '' ) {
         try {
@@ -53,6 +57,10 @@ export const Cadastro = () => {
     const { role } = useContext( StoreContext );
 
     useEffect( () => {
+        /**
+         * @Summary Atualiza sinal de disponibilidade de nome de usuário/email
+         * @param verify Variável que contém os valores
+         */
         async function atualizaCheck ( verify ) {
             const username = values.userName;
             if ( username === '' ) {
@@ -80,7 +88,7 @@ export const Cadastro = () => {
         atualizaCheck();
     }, [ values.userName ] );
 
-    async function onChange ( event ) {
+    function onChange ( event ) {
         const { value, name } = event.target;
 
         setValues( {
@@ -96,7 +104,7 @@ export const Cadastro = () => {
         } );
     }
 
-    async function onSubmit ( event ) {
+    async function onSubmit () {
         if ( values.password !== values.passwordC || await verificaNomeDeUsuario( values.userName ) ) {
             return null;
         }

@@ -17,14 +17,17 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    @Override
     public Usuario consultarUsuarioPorNome(String nome){
         return usuarioRepository.findByUserName(nome);
     }
 
+    @Override
     public Usuario salvarUsuario(Usuario usuario){
         return usuarioRepository.save(usuario);
     }
 
+    @Override
     public List<Usuario> buscarUsuarios(){
         return usuarioRepository.findAll();
     }

@@ -1,5 +1,5 @@
-import { createContext } from 'react'
-import roleNames from '../../utils/permissionLevel'
+import { createContext } from 'react';
+import roleNames from '../../utils/permissionLevel';
 
 const StoreContext = createContext( {
     token: null,

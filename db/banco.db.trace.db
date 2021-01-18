@@ -225,3 +225,30 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection wa
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:622)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	... 18 more
+2021-01-18 05:48:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]
+2021-01-18 05:56:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]
+2021-01-18 06:02:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]
+2021-01-18 06:05:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]
+2021-01-18 06:06:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]
+2021-01-18 06:11:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]
+2021-01-18 06:16:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]
+2021-01-18 06:22:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]
+2021-01-18 06:38:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_CODIFICADA VARCHAR(255)": "'iVBORw0KGgoAAAANSUhEUgAAA8AAAAMcCAMAAACo9Dz9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXA... (9568)"; SQL statement:
+insert into produto (descricao, img_codificada, img_src, nome, preco, quantidade, id) values (?, ?, ?, ?, ?, ?, ?) [22001-200]

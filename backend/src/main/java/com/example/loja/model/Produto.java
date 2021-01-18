@@ -2,9 +2,7 @@ package com.example.loja.model;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Produto {
@@ -21,8 +19,6 @@ public class Produto {
     private String descricao;
 
     private Integer quantidade;
-
-    public MultipartFile img;
 
     public Integer getQuantidade() {
         return quantidade;

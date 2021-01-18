@@ -1,12 +1,9 @@
-import React from 'react'
-import { PageCenter } from '../../components/PageCenter/PageCenter';
+import React from 'react';
+import PageCenter from '../../components/PageCenter/PageCenter';
 import { Header } from 'semantic-ui-react';
-import { PageHeader } from '../../components/PageHeader/PageHeader';
+import PageHeader from '../../components/PageHeader/PageHeader';
 
 const PagesAccessDenied = () => {
-    // const { setToken } = useContext( StoreContext );
-    // const history = useHistory();
-
     return (
         <PageCenter>
             <PageHeader />

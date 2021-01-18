@@ -3,19 +3,16 @@ import { Grid, GridColumn, GridRow, Header, Item, Image, Button } from 'semantic
 import StoreContext from '../store/Context';
 import './CarrinhoCompras.css';
 
-export const CarrinhoCompras = () => {
+const CarrinhoCompras = () => {
     const { carrinho, setCarrinho } = useContext( StoreContext );
 
     function onButtonClick ( op, item ) {
-        console.log( item );
-
         item.atualizaCarrinho( op );
         setCarrinho( [ ...carrinho ] );
     }
 
     function finalizarPedido () {
         console.log( "Finalizar Pedido" );
-
     }
 
     function calculaTotal () {
@@ -24,7 +21,6 @@ export const CarrinhoCompras = () => {
         carrinho.forEach( ( item ) => {
             total += item.preco * item.qtdCarrinho;
         } );
-
         return total;
     }
 
@@ -57,7 +53,7 @@ export const CarrinhoCompras = () => {
                                             <img fluid onClick={ () => onButtonClick( 'subtrair', carrinhoItem ) } src='https://image.flaticon.com/icons/png/512/7/7659.png' alt='button' />
                                         </GridColumn>
                                         <GridColumn width={ 4 }>
-                                            <Header fluid as='h3'> { carrinhoItem.qtdCarrinho }</Header>
+                                            <Header as='h3'> { carrinhoItem.qtdCarrinho }</Header>
                                         </GridColumn>
                                         <GridColumn width={ 6 }>
                                             <img fluid onClick={ () => onButtonClick( 'somar', carrinhoItem ) } src='https://img2.gratispng.com/20180318/jqe/kisspng-computer-icons-clip-art-underline-swirl-5aae745e406ca3.6560336815213824942639.jpg' alt='button' />
@@ -92,3 +88,5 @@ export const CarrinhoCompras = () => {
         <Header as='h1' textAlign='center' color='blue'>Seu Carrinho esta Vazio!</Header>
     );
 };
+
+export default CarrinhoCompras;

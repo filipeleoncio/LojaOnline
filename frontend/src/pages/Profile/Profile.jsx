@@ -1,28 +1,10 @@
-import React from 'react'
-// import StoreContext from '../../components/store/Context'
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { PageCenter } from '../../components/PageCenter/PageCenter';
+import PageCenter from '../../components/PageCenter/PageCenter';
 import { Button, Header } from 'semantic-ui-react';
-import { PageHeader } from '../../components/PageHeader/PageHeader';
-
-// function PagesProfile () {
-//     const { setToken } = useContext( StoreContext );
-//     const history = useHistory();
-
-//     function onSubmitHome () {
-//         return history.push( '/' );
-//     }
-
-//     return (
-//         <div>
-//             <h1>Pagina do Usuario</h1>
-//             <button type="submit" onClick={ onSubmitHome }>Pagina inicial</button>
-//         </div>
-//     );
-// }
+import PageHeader from '../../components/PageHeader/PageHeader';
 
 const PagesProfile = () => {
-    // const { setToken } = useContext( StoreContext );
     const history = useHistory();
 
     function onButtonClick () {

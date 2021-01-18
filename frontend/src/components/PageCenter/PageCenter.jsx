@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, GridColumn } from 'semantic-ui-react';
 
-export const PageCenter = ( { children } ) => {
+const PageCenter = ( { children } ) => {
     return (
         <Grid>
             <GridColumn width={ 4 } />
@@ -12,3 +12,5 @@ export const PageCenter = ( { children } ) => {
         </Grid>
     )
 }
+
+export default PageCenter;

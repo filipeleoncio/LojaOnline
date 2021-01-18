@@ -40,11 +40,6 @@ public class HomeResource {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    /*@GetMapping("role")
-    public String getRole(String token){
-
-    }*/
-
     @PostMapping("autenticacao")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception{
 

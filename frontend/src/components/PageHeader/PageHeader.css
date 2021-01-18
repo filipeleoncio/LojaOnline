@@ -2,19 +2,6 @@
     color: green;
 }
 
-.ui.segment.blue.inverted.Hover:hover {
-    background-color: black !important;
-}
-
-.mouseOn{
-    background-color:green;
-    color:yellow;
-}
-
-.mouseOff{
-    background-color:blue;
-}
-
 p:hover{
     color:green !important;
 }

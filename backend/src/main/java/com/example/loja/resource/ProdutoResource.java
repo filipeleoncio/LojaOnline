@@ -2,11 +2,8 @@ package com.example.loja.resource;
 
 import com.example.loja.model.Produto;
 import com.example.loja.service.ProdutoService;
-import com.example.loja.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -34,7 +31,6 @@ public class ProdutoResource {
     //@Secured("ADMIN")
     @PostMapping
     public Produto salvarProduto(@RequestBody Produto produto){
-        //produto.img (Multipart file)
         return produtoService.salvarProduto(produto);
     }
 

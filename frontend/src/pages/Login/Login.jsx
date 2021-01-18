@@ -7,9 +7,4 @@ function PagesLogin () {
     );
 }
 
-// const PagesLogin = () => (
-//     <UserLogin />
-// );
-
-
 export default PagesLogin;

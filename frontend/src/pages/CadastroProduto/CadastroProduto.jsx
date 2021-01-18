@@ -4,25 +4,27 @@ import { check } from '../../utils/check';
 import { Api } from '../../utils/apiData';
 import { Button, Form, Header, Input, Image, Dimmer } from 'semantic-ui-react';
 import { timeout } from '../../utils/timeout';
-// import { useHistory } from 'react-router-dom';
-import { PageCenter } from '../../components/PageCenter/PageCenter'
-import { PageHeader } from '../../components/PageHeader/PageHeader';
+import { useHistory } from 'react-router-dom';
+import PageCenter from '../../components/PageCenter/PageCenter'
+import PageHeader from '../../components/PageHeader/PageHeader';
 
 function initialStateValues () {
     return {
         nome: '',
         preco: '',
         descricao: '',
-        quantidade: '',
-        img: ''
+        quantidade: ''
     }
 }
 
+/**
+ * @Summary Verifica se nome do produto ja está cadastrado
+ * @param nomeProduto
+ */
 async function verificaNomeDoProduto ( nomeProduto ) {
     if ( nomeProduto !== '' ) {
         try {
             const res = await axios.get( Api.url + Api.verificaNomeProduto( nomeProduto ) );
-            console.log( "verificando nome do produto", res.data );
             return res.data;
         }
         catch ( err ) {
@@ -36,10 +38,15 @@ async function verificaNomeDoProduto ( nomeProduto ) {
 
 const PagesCadastroProduto = () => {
     const [ values, setValues ] = useState( initialStateValues );
+    const [ img, setImg ] = useState( '' );
     const [ verificaNome, setVerificaNome ] = useState( '' );
     const [ activeDimmer, setActiveDimmer ] = useState( false );
+    const history = useHistory();
 
     useEffect( () => {
+        /**
+         * @Summary Atualiza sinal de disponibilidade de nome de produto
+         */
         async function atualizaCheck () {
             const nomeProduto = values.nome;
             if ( nomeProduto === '' ) {
@@ -58,48 +65,24 @@ const PagesCadastroProduto = () => {
         atualizaCheck();
     }, [ values.nome ] );
 
-    async function onChange ( event ) {
+    function onChange ( event ) {
         const { value, name } = event.target;
 
-        if ( name === 'img' ) {
-            setValues( {
-                ...values,
-                [ name ]: event.target.files[ 0 ],
-            } );
-        }
-        else {
-            setValues( {
-                ...values,
-                [ name ]: value,
-            } );
-        }
+        setValues( {
+            ...values,
+            [ name ]: value,
+        } );
     }
 
-    async function onSubmit ( event ) {
-        console.log( values );
-        console.log( values.img.name );
-        console.log( values.img.type );
+    function onChangeFile ( event ) {
+        setImg( event.target.files[ 0 ] );
+    }
 
-        // const formData = new FormData();
-
-        // // Update the formData object
-        // formData.append(
-        //     "myFile",
-        //     this.state.selectedFile,
-        //     this.state.selectedFile.name
-        // );
-
-        // // Details of the uploaded file
-        // console.log( this.state.selectedFile );
-
-        // // Request made to the backend api
-        // // Send formData object
-        // axios.post( "api/uploadfile", formData );
-
-
+    async function onSubmit () {
         if ( await verificaNomeDoProduto( values.nome ) ) {
             return null;
         }
+
         try {
             await axios.post( Api.url + Api.produto, values );
         }
@@ -109,9 +92,9 @@ const PagesCadastroProduto = () => {
             throw err;
         }
 
-        // setActiveDimmer( true );
-        // await timeout( 1000 );
-        // return history.push( '/' );
+        setActiveDimmer( true );
+        await timeout( 1000 );
+        return history.push( '/' );
     }
 
     return (
@@ -143,13 +126,13 @@ const PagesCadastroProduto = () => {
                     />
                     <Form.Field
                         control={ Input } type='file' label='Imagem' required
-                        name='img' onChange={ onChange }
-                    // value={ values.img }
+                        name='img' onChange={ onChangeFile }
                     />
                     <Form.Field
                         control={ Button } type='submit' content='Cadastrar'
                     />
                 </Form>
+
             </PageCenter >
             <Dimmer active={ activeDimmer } page>
                 <Header as='h2' inverted>Produto cadastrado com sucesso!</Header>

@@ -6,8 +6,8 @@ import { Button, Form, Input, Label } from 'semantic-ui-react';
 import './Login.css';
 import roleNames from '../../../utils/permissionLevel';
 import { Api } from '../../../utils/apiData';
-import { PageCenter } from '../../PageCenter/PageCenter';
-import { PageHeader } from '../../PageHeader/PageHeader';
+import PageCenter from '../../PageCenter/PageCenter';
+import PageHeader from '../../PageHeader/PageHeader';
 
 function getRoleCode ( role ) {
     switch ( role ) {
@@ -32,14 +32,11 @@ async function verificaLogin ( { user, password } ) {
 
     try {
         return await axios.post( Api.url + Api.autenticacao, dataLogin );
-        // console.log( "jwt: ", data );
-        // return ;
     }
     catch ( err ) {
         const error = 'Erro app -> verificaLogin; Erro: ' + err;
         console.log( error );
-        // throw err;
-        return { error: "Usuario ou senha incorreto." };
+        return { error: 'Usuario ou senha incorretos' };
     }
 }
 
@@ -50,7 +47,6 @@ const UserLogin = () => {
     const history = useHistory();
 
     function onChange ( event ) {
-        // console.log( event.target );
         const { value, name } = event.target;
 
         setValues( {
@@ -60,33 +56,18 @@ const UserLogin = () => {
         setShowError( false );
     }
 
-
-    // function login({ user, password }) {
-
-    //     if(user === 'admin' && password === 'admin'){
-    //         return { token:'1234' };
-    //     }
-    //     return { error: 'Usuário ou senha inválido!'};
-    // }
-
     async function onSubmit ( event ) {
         event.preventDefault();
 
-        // const { token } = verificaLogin( values );
-        // const { token } = await verificaLogin( values );
         const res = await verificaLogin( values );
         if ( res.data ) {
             const token = res.data.jwt;
             const role = res.data.role;
-            // console.log( "token: ", token );
-            // console.log( "codigo: ", getRoleCode( role ) );
 
-            if ( token ) {
-                setToken( token );
-                setRole( getRoleCode( role ) );
-                setCarrinho( [] );
-                return history.push( '/' );
-            }
+            setToken( token );
+            setRole( getRoleCode( role ) );
+            setCarrinho( [] );
+            return history.push( '/' );
         }
         setShowError( true );
         setValues( initialState );
