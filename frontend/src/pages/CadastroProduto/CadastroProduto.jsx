@@ -3,10 +3,10 @@ import axios from 'axios';
 import { check } from '../../utils/check';
 import { Api } from '../../utils/apiData';
 import { Button, Form, Header, Input, Image, Dimmer } from 'semantic-ui-react';
-import { timeout } from '../../utils/timeout';
 import { useHistory } from 'react-router-dom';
 import PageCenter from '../../components/PageCenter/PageCenter'
 import PageHeader from '../../components/PageHeader/PageHeader';
+// import defaultImage from '../../images/defaultImage.jpg';
 
 function initialStateValues () {
     return {
@@ -79,12 +79,27 @@ const PagesCadastroProduto = () => {
     }
 
     async function onSubmit () {
+
+        let formData = new FormData();
+        formData.append( 'nome', values.nome );
+        formData.append( 'preco', values.preco );
+        formData.append( 'descricao', values.descricao );
+        formData.append( 'quantidade', values.quantidade );
+        formData.append( 'file', img );
+
+        let config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
         if ( await verificaNomeDoProduto( values.nome ) ) {
             return null;
         }
 
         try {
-            await axios.post( Api.url + Api.produto, values );
+            // await axios.post( Api.url + Api.produto, values );
+            await axios.post( Api.url + Api.produto, formData, config );
         }
         catch ( err ) {
             const error = 'Erro app -> cadastrarProduto; Erro: ' + err;
@@ -93,8 +108,15 @@ const PagesCadastroProduto = () => {
         }
 
         setActiveDimmer( true );
-        await timeout( 1000 );
-        return history.push( '/' );
+    }
+
+    function handleReturn ( path ) {
+        return history.push( path );
+    }
+
+    function handleContinue () {
+        setActiveDimmer( false );
+        setValues( initialStateValues );
     }
 
     return (
@@ -132,13 +154,16 @@ const PagesCadastroProduto = () => {
                         control={ Button } type='submit' content='Cadastrar'
                     />
                 </Form>
-
             </PageCenter >
             <Dimmer active={ activeDimmer } page>
                 <Header as='h2' inverted>Produto cadastrado com sucesso!</Header>
+                <div className='buttons'>
+                    <Button onClick={ handleContinue } content='Cadastrar outro Produto' />
+                    <Button onClick={ () => handleReturn( '/' ) } content='Retornar a Loja' />
+                </div>
             </Dimmer>
         </div>
     )
 }
 
-export default PagesCadastroProduto
+export default PagesCadastroProduto;

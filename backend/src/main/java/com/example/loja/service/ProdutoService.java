@@ -9,4 +9,6 @@ public interface ProdutoService {
     public List<Produto> buscarProdutos();
     public List<Produto> salvarListaProdutos(List<Produto> produto);
     public Produto consultarProdutoPorNome(String nomeProduto);
+    public void removeProduto(Produto produto);
+    public void removeProdutoPorId(Integer idProduto);
 }

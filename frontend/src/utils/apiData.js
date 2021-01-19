@@ -5,5 +5,6 @@ export const Api = {
     usuario: '/usuario',
     produto: '/produto',
     verificarUsername: ( username ) => `/usuario/verificaUsername?username=${ username }`,
-    verificaNomeProduto: ( nomeProduto ) => `/produto/verificaNomeProduto?nomeProduto=${ nomeProduto }`
+    verificaNomeProduto: ( nomeProduto ) => `/produto/verificaNomeProduto?nomeProduto=${ nomeProduto }`,
+    deletaProduto: ( idProduto ) => `/produto/deletaProdutoPorId?idProduto=${ idProduto }`
 };

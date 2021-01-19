@@ -10,6 +10,8 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 import Produto from '../../classes/Produto';
 import { timeout } from '../../utils/timeout';
 
+const imgBase = 'data:image/jpeg;base64,';
+
 const PagesHome = () => {
     const { setProdutos, logoutRealizado, setLogoutRealizado } = useContext( StoreContext );
     const [ activeDimmer, setActiveDimmer ] = useState( false );
@@ -43,7 +45,7 @@ const PagesHome = () => {
                         produto.id,
                         produto.nome,
                         produto.preco,
-                        produto.imgSrc,
+                        imgBase + produto.file,
                         produto.descricao,
                         produto.quantidade
                     );
@@ -58,7 +60,7 @@ const PagesHome = () => {
             }
         };
         fetchData();
-    }, [ setProdutos ] );
+    } );
 
     return (
         <div>

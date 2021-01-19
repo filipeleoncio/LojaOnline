@@ -1,6 +1,8 @@
+import axios from 'axios';
 import React, { useContext } from 'react';
 import { Button, Grid, GridColumn, GridRow, Item, Image } from 'semantic-ui-react';
 import Produto from '../../classes/Produto';
+import { Api } from '../../utils/apiData';
 import roleNames from '../../utils/permissionLevel';
 import { If } from '../If/If';
 import StoreContext from '../store/Context';
@@ -11,7 +13,7 @@ const CompProduto = () => {
     const { role, produtos } = useContext( StoreContext );
 
 
-    function onClick ( prod ) {
+    function adicionaCarrinho ( prod ) {
 
         const prodEscolhido = produtos.find( ( produto ) => produto.id === prod.id );
 
@@ -44,6 +46,17 @@ const CompProduto = () => {
         }
     }
 
+    async function removeProduto ( prod ) {
+        try {
+            await axios.delete( Api.url + Api.deletaProduto( prod.id ) );
+        }
+        catch ( err ) {
+            const error = 'Erro app -> removeProduto; Erro: ' + err;
+            console.log( error );
+            throw err;
+        }
+    }
+
     if ( produtos ) {
         return (
             <Grid >
@@ -64,11 +77,14 @@ const CompProduto = () => {
                                 </Item>
                             </Item.Group>
                         </GridColumn>
-                        <If condition={ role >= roleNames.USER }>
-                            <GridColumn width={ 5 }>
-                                <Button onClick={ () => onClick( prod ) } >Adicionar ao carrinho</Button>
-                            </GridColumn>
-                        </If>
+                        <GridColumn width={ 5 }>
+                            <If condition={ role >= roleNames.USER }>
+                                <Button className='buttonsDisplay1' onClick={ () => adicionaCarrinho( prod ) } >Adicionar ao carrinho</Button>
+                            </If>
+                            <If condition={ role >= roleNames.ADMIN }>
+                                <Button className='buttonsDisplay2' onClick={ () => removeProduto( prod ) } >Remover Produto</Button>
+                            </If>
+                        </GridColumn>
                     </GridRow>
                 ) )
                 }

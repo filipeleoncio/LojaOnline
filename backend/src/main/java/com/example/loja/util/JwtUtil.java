@@ -1,6 +1,5 @@
 package com.example.loja.util;
 
-import com.example.loja.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,8 +23,6 @@ public class JwtUtil {
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
-
-    //public String extractRole(String token) { return extractClaim(token, Claims::);}
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);

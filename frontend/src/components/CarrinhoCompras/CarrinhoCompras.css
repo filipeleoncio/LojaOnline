@@ -13,3 +13,8 @@ img:hover{
 .boxQuantidade{
     padding-top: 16% !important;
 }
+
+.noPadding{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}

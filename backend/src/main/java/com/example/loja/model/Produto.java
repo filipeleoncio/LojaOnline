@@ -3,6 +3,7 @@ package com.example.loja.model;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 public class Produto {
@@ -14,11 +15,50 @@ public class Produto {
 
     private Float preco;
 
-    private String imgSrc;
+    //private String imgSrc;
 
     private String descricao;
 
     private Integer quantidade;
+
+    //@Lob
+    //@Column(name = "imgCodificada", columnDefinition="CLOB")
+    //private String imgCodificada;
+
+    @Lob
+    @Column(name = "file", columnDefinition="BLOB")
+    private byte[] file;
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    /*
+    public String getImgCodificada() {
+        return imgCodificada;
+    }
+
+    public void setImgCodificada(String imgCodificada) {
+        this.imgCodificada = imgCodificada;
+    }
+    */
+
+    public Produto() {
+
+    }
+
+    public Produto(String nome, Float preco, String descricao, Integer quantidade, byte[] file) {
+        this.nome = nome;
+        this.preco = preco;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.file = file;
+        //this.imgSrc = "data:image/jpeg;base64," + Arrays.toString(file);
+    }
 
     public Integer getQuantidade() {
         return quantidade;
@@ -60,6 +100,7 @@ public class Produto {
         this.preco = preco;
     }
 
+    /*
     public String getImgSrc() {
         return imgSrc;
     }
@@ -67,5 +108,5 @@ public class Produto {
     public void setImgSrc(String imgSrc) {
         this.imgSrc = imgSrc;
     }
-
+    */
 }

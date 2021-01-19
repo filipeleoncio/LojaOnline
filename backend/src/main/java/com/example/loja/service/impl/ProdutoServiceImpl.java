@@ -46,4 +46,14 @@ public class ProdutoServiceImpl implements ProdutoService {
     public Produto consultarProdutoPorNome(String nomeProduto) {
         return produtoRepository.findByNome(nomeProduto);
     }
+
+    @Override
+    public void removeProduto(Produto produto) {
+        produtoRepository.delete(produto);
+    }
+
+    @Override
+    public void removeProdutoPorId(Integer idProduto) {
+        produtoRepository.deleteById(idProduto);
+    }
 }
