@@ -1,11 +1,13 @@
 .buttonsDisplay1{
     margin-top: 3% !important;
     margin-bottom: 5% !important;
-    height: 45%;
+    width: 70%;
+    /* margin-left: 20px !important; */
+    height: 35%;
 }
 
 .buttonsDisplay2{
     margin-bottom: 3% !important;
-    width: 100%;
+    width: 70%;
     height: 35%;
 }

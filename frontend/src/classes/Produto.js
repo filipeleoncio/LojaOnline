@@ -29,6 +29,10 @@ export default class Produto {
         this.qtdCarrinho -= 1;
     }
 
+    /**
+     * @Summary Atualiza o carrinho de acordo com a operação
+     * @param op Operação equivalente ('Somar', 'Subtrair')
+     */
     atualizaCarrinho ( op ) {
         if ( op === 'somar' )
             this.qtdCarrinho += 1;

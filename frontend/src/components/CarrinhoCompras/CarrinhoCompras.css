@@ -11,10 +11,24 @@ img:hover{
 }
 
 .boxQuantidade{
-    padding-top: 16% !important;
+    padding-top: 14% !important;
+    padding-bottom: 10px !important;
 }
 
 .noPadding{
     padding-right: 0 !important;
     padding-left: 0 !important;
+    padding-top: 4px !important;
+}
+
+.displayRow{
+    display: flex;
+}
+
+.displayColumn{
+    display: block;
+}
+
+.displaySubtotal{
+    padding-top: 3% !important;
 }

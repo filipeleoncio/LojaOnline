@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, GridColumn, GridRow, Header, Item, Image, Button, Dimmer } from 'semantic-ui-react';
+import { Grid, GridColumn, GridRow, Header, Item, Image, Button } from 'semantic-ui-react';
+import ItemDimmer from '../ItemDimmer/ItemDimmer';
 import StoreContext from '../store/Context';
 import './CarrinhoCompras.css';
 
@@ -7,43 +8,53 @@ const CarrinhoCompras = () => {
     const { carrinho, setCarrinho } = useContext( StoreContext );
     const [ itemDimmer, setItemDimmer ] = useState( [] );
 
+    /**
+     * @Summary Seta a variavel responsável
+     * pelo dimmer de cada item do carrinho
+     */
     useEffect( () => {
         let itens = [];
-
         carrinho.forEach( ( carrinhoItem ) => {
             itens = [ ...itens, {
                 'id': carrinhoItem.id,
                 'res': false
             } ];
         } );
-
-        // console.log( itens );
-
         setItemDimmer( itens );
-
     }, [ carrinho ] );
 
-    function dimmedAssociado ( id ) {
-        if ( itemDimmer.length <= 0 )
-            return false;
-        // console.log( "item ", id, ": ", itemDimmer.find( ( item ) => item.id === id ).res )
-        return itemDimmer.find( ( item ) => item.id === id ).res;
-    }
-
+    /**
+     * @Summary Atualiza a quantidade de cada produto no carrinho
+     * @param op Operação a ser feita (Adição, subtração)
+     * @param item Item a ser atualizado
+     */
     function handleAtualiza ( op, item ) {
         item.atualizaCarrinho( op );
         setCarrinho( [ ...carrinho ] );
     }
 
-    function handleRemoveItem ( item ) {
-        setCarrinho( carrinho.slice( carrinho.indexOf( item, 1 ) ) );
+    /**
+     * @Summary Atualiza o dimmer do item no carrinho de acordo com o status
+     * @param id Id do item no carrinho
+     * @param status Novo status do dimmer
+     */
+    function handleDimmer ( id, status ) {
+        if ( itemDimmer.length > 0 ) {
+            itemDimmer.find( ( item ) => item.id === id ).res = status;
+            setItemDimmer( [ ...itemDimmer ] );
+        }
     }
 
-    function handleDimmer ( id, status ) {
-
-        itemDimmer.find( ( item ) => item.id === id ).res = status;
-        // console.log( itemDimmer.find( ( item ) => item.id === id ) );
-        setItemDimmer( [ ...itemDimmer ] );
+    /**
+     * @Summary Retorna o dimmer do item do carrinho
+     * @param id Id do item equivalente
+     */
+    function getIsDimmerAssociado ( id ) {
+        const item = itemDimmer.find( ( item ) => item.id === id );
+        if ( item ) {
+            return item.res;
+        }
+        return false;
     }
 
     function finalizarPedido () {
@@ -63,8 +74,11 @@ const CarrinhoCompras = () => {
         return (
             <Grid>
                 { carrinho.map( ( carrinhoItem, index ) => (
-                    <GridRow key={ index }>
-                        {/* <Dimmer.Dimmable dimmed={ dimmedAssociado( carrinhoItem.id ) }> */ }
+                    <ItemDimmer key={ index }
+                        isDimmed={ getIsDimmerAssociado( carrinhoItem.id ) }
+                        handleDimmer={ handleDimmer }
+                        listItem={ carrinhoItem } list={ carrinho } setList={ setCarrinho }
+                        headerMessage={ `Deseja remover ${ carrinhoItem.nome } do carrinho?` }>
                         <GridColumn width={ 3 }>
                             <Image src={ carrinhoItem.imagem } />
                         </GridColumn>
@@ -85,18 +99,18 @@ const CarrinhoCompras = () => {
                                 <Header as='h4' >Quantidade</Header>
                                 <Grid>
                                     <GridRow verticalAlign='middle' className='boxQuantidade'>
-                                        <GridColumn width={ 6 }>
+                                        <GridColumn width={ 5 }>
                                             <Image onClick={ () => handleAtualiza( 'subtrair', carrinhoItem ) } src='https://image.flaticon.com/icons/png/512/7/7659.png' alt='button' />
                                         </GridColumn>
-                                        <GridColumn width={ 4 } className='noPadding'>
+                                        <GridColumn width={ 6 } className='noPadding'>
                                             <Header as='h3'> { carrinhoItem.qtdCarrinho }</Header>
                                         </GridColumn>
-                                        <GridColumn width={ 6 }>
-                                            <img onClick={ () => handleAtualiza( 'somar', carrinhoItem ) } src='https://img2.gratispng.com/20180318/jqe/kisspng-computer-icons-clip-art-underline-swirl-5aae745e406ca3.6560336815213824942639.jpg' alt='button' />
+                                        <GridColumn width={ 5 }>
+                                            <Image onClick={ () => handleAtualiza( 'somar', carrinhoItem ) } src='https://img2.gratispng.com/20180318/jqe/kisspng-computer-icons-clip-art-underline-swirl-5aae745e406ca3.6560336815213824942639.jpg' alt='button' />
                                         </GridColumn>
                                     </GridRow>
                                     <GridRow>
-                                        <Button size='tiny' fluid onClick={ () => handleDimmer( carrinhoItem.id, true ) } content='Remover Item' />
+                                        <Button fluid onClick={ () => handleDimmer( carrinhoItem.id, true ) } content='Remover Item' />
                                     </GridRow>
                                 </Grid>
                             </div>
@@ -104,14 +118,10 @@ const CarrinhoCompras = () => {
                         <GridColumn width={ 3 }>
                             <div className='centered'>
                                 <Header as='h4'>Sub-Total</Header>
-                                <Header as='h5'>R$: { carrinhoItem.preco * carrinhoItem.qtdCarrinho }</Header>
+                                <Header as='h3' className='displaySubtotal'>R$: { carrinhoItem.preco * carrinhoItem.qtdCarrinho }</Header>
                             </div>
                         </GridColumn>
-                        {/* <Dimmer active={ dimmedAssociado( carrinhoItem.id ) } onClickOutside={ () => handleDimmer( carrinhoItem.id, false ) }>
-                                <Header as='h1'>Message</Header>
-                            </Dimmer>
-                        </Dimmer.Dimmable> */}
-                    </GridRow>
+                    </ItemDimmer>
                 ) )
                 }
                 <GridRow>
