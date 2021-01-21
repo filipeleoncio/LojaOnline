@@ -1,11 +1,13 @@
+import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid, GridColumn, GridRow, Header, Item, Image, Button } from 'semantic-ui-react';
+import { Api } from '../../utils/apiData';
 import ItemDimmer from '../ItemDimmer/ItemDimmer';
 import StoreContext from '../store/Context';
 import './CarrinhoCompras.css';
 
 const CarrinhoCompras = () => {
-    const { carrinho, setCarrinho } = useContext( StoreContext );
+    const { carrinho, setCarrinho, produtos } = useContext( StoreContext );
     const [ itemDimmer, setItemDimmer ] = useState( [] );
 
     /**
@@ -24,16 +26,6 @@ const CarrinhoCompras = () => {
     }, [ carrinho ] );
 
     /**
-     * @Summary Atualiza a quantidade de cada produto no carrinho
-     * @param op Operação a ser feita (Adição, subtração)
-     * @param item Item a ser atualizado
-     */
-    function handleAtualiza ( op, item ) {
-        item.atualizaCarrinho( op );
-        setCarrinho( [ ...carrinho ] );
-    }
-
-    /**
      * @Summary Atualiza o dimmer do item no carrinho de acordo com o status
      * @param id Id do item no carrinho
      * @param status Novo status do dimmer
@@ -46,7 +38,7 @@ const CarrinhoCompras = () => {
     }
 
     /**
-     * @Summary Retorna o dimmer do item do carrinho
+     * @Summary Retorna o status do dimmer do item do carrinho
      * @param id Id do item equivalente
      */
     function getIsDimmerAssociado ( id ) {
@@ -57,8 +49,29 @@ const CarrinhoCompras = () => {
         return false;
     }
 
-    function finalizarPedido () {
-        console.log( "Finalizar Pedido" );
+    /**
+     * @Summary Atualiza a quantidade de cada produto no carrinho
+     * @param op Operação a ser feita (Adição, subtração)
+     * @param item Item a ser atualizado
+     */
+    function handleAtualiza ( op, item ) {
+        let produtoLoja = produtos.find( ( prod ) => prod.id === item.id );
+        let qtdMaxDisponivel = produtoLoja.quantidade;
+        item.atualizaCarrinho( op, qtdMaxDisponivel );
+        setCarrinho( [ ...carrinho ] );
+    }
+
+    async function finalizarPedido () {
+        try {
+            await axios.put( Api.url + Api.produto, carrinho );
+        }
+        catch ( err ) {
+            const error = 'Erro app -> finalizarPedido; Erro: ' + err;
+            console.log( error );
+            throw err;
+        }
+        setCarrinho( [] );
+        console.log( "Pedido finalizado" );
     }
 
     function calculaTotal () {

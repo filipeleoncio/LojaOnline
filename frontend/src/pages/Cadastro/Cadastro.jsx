@@ -49,7 +49,7 @@ async function verificaNomeDeUsuario ( userName ) {
     return null;
 }
 
-export const Cadastro = () => {
+const Cadastro = () => {
     const [ values, setValues ] = useState( initialStateValues );
     const [ verify, setVerify ] = useState( initialStateVerify );
     const [ activeDimmer, setActiveDimmer ] = useState( false );
@@ -179,3 +179,4 @@ export const Cadastro = () => {
         </div>
     )
 }
+export default Cadastro;

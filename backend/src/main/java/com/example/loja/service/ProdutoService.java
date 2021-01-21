@@ -11,4 +11,5 @@ public interface ProdutoService {
     public Produto consultarProdutoPorNome(String nomeProduto);
     public void removeProduto(Produto produto);
     public void removeProdutoPorId(Integer idProduto);
+    public void finalizaPedido(List<Produto> carrinho);
 }

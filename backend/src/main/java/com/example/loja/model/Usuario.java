@@ -1,9 +1,7 @@
 package com.example.loja.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Usuario")
@@ -18,6 +16,8 @@ public class Usuario {
     private String email;
     private String password;
     private String role;
+
+    //private List<Produto> wishList;
 
     public Integer getId() {
         return id;
@@ -74,4 +74,22 @@ public class Usuario {
     public void setRole(String role) {
         this.role = role;
     }
+
+    /*
+    public List<Produto> getWishList() {
+        return wishList;
+    }
+
+    public void setWishList(List<Produto> wishList) {
+        this.wishList = wishList;
+    }
+
+    public void addWishList(Produto produto){
+        wishList.add(produto);
+    }
+
+    public void removeWishList(Produto produto){
+        wishList.remove(produto);
+    }
+    */
 }

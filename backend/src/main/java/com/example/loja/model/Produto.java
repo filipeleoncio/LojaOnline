@@ -15,15 +15,11 @@ public class Produto {
 
     private Float preco;
 
-    //private String imgSrc;
-
     private String descricao;
 
     private Integer quantidade;
 
-    //@Lob
-    //@Column(name = "imgCodificada", columnDefinition="CLOB")
-    //private String imgCodificada;
+    private Integer qtdCarrinho;
 
     @Lob
     @Column(name = "file", columnDefinition="BLOB")
@@ -36,16 +32,6 @@ public class Produto {
     public void setFile(byte[] file) {
         this.file = file;
     }
-
-    /*
-    public String getImgCodificada() {
-        return imgCodificada;
-    }
-
-    public void setImgCodificada(String imgCodificada) {
-        this.imgCodificada = imgCodificada;
-    }
-    */
 
     public Produto() {
 
@@ -100,13 +86,15 @@ public class Produto {
         this.preco = preco;
     }
 
-    /*
-    public String getImgSrc() {
-        return imgSrc;
+    public Integer getQtdCarrinho() {
+        return qtdCarrinho;
     }
 
-    public void setImgSrc(String imgSrc) {
-        this.imgSrc = imgSrc;
+    public void setQtdCarrinho(Integer qtdCarrinho) {
+        this.qtdCarrinho = qtdCarrinho;
     }
-    */
+
+    public void baixarEstoque(Integer quantidade){
+        this.quantidade -= quantidade;
+    }
 }

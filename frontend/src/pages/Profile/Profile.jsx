@@ -7,15 +7,17 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 const PagesProfile = () => {
     const history = useHistory();
 
-    function onButtonClick () {
-        return history.push( '/perfil/carrinho' );
+    function onButtonClick ( path ) {
+        return history.push( path );
     }
 
     return (
         <PageCenter>
             <PageHeader />
             <Header as='h1' textAlign='center'>Pagina do Usuario</Header>
-            <Button onClick={ onButtonClick }>Carrinho de Compras</Button>
+            <Button onClick={ () => onButtonClick( '/perfil/carrinho' ) }>Carrinho de Compras</Button>
+            <Button onClick={ () => onButtonClick( '/perfil/listaDesejos' ) }>Lista de Desejos</Button>
+
         </PageCenter>
     );
 }

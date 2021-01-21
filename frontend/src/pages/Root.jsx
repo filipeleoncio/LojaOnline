@@ -10,9 +10,10 @@ import Profile from './Profile/Profile'
 import AccessDenied from './AccessDenied/AccessDenied'
 // import AccessDenied from './AccessDenied/AccessDenied'
 import roleNames from '../utils/permissionLevel';
-import { Cadastro } from './Cadastro/Cadastro';
+import Cadastro from './Cadastro/Cadastro';
 import Carrinho from './Carrinho/Carrinho';
 import CadastroProduto from './CadastroProduto/CadastroProduto';
+import ListaDesejos from './ListaDesejos/ListaDesejos';
 
 const PagesRoot = () => (
     <Router>
@@ -24,6 +25,7 @@ const PagesRoot = () => (
                 <RoutesPrivate requiredRole={ roleNames.DEFAULT } path="/cadastro" exact={ true } component={ Cadastro } />
                 <RoutesPrivate requiredRole={ roleNames.USER } path="/perfil" exact={ true } component={ Profile } />
                 <RoutesPrivate requiredRole={ roleNames.USER } path="/perfil/carrinho" component={ Carrinho } />
+                <RoutesPrivate requiredRole={ roleNames.USER } path="/perfil/listaDesejos" component={ ListaDesejos } />
                 <RoutesPrivate requiredRole={ roleNames.ADMIN } path="/gerenciar" component={ Management } />
                 <RoutesPrivate requiredRole={ roleNames.ADMIN } path="/cadastrarProduto" component={ CadastroProduto } />
             </Switch>

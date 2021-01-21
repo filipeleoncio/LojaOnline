@@ -6,8 +6,6 @@ import { Button, Form, Input, Label } from 'semantic-ui-react';
 import './Login.css';
 import roleNames from '../../../utils/permissionLevel';
 import { Api } from '../../../utils/apiData';
-import PageCenter from '../../PageCenter/PageCenter';
-import PageHeader from '../../PageHeader/PageHeader';
 
 function getRoleCode ( role ) {
     switch ( role ) {
@@ -40,10 +38,21 @@ async function verificaLogin ( { user, password } ) {
     }
 }
 
+async function retornaUsuario ( username ) {
+    try {
+        return await axios.get( Api.url + Api.buscaUsuarioPorNome( username ) );
+    }
+    catch ( err ) {
+        const error = 'Erro app -> retornaUsuario; Erro: ' + err;
+        console.log( error );
+        throw err;
+    }
+}
+
 const UserLogin = () => {
     const [ values, setValues ] = useState( initialState );
     const [ showError, setShowError ] = useState( false );
-    const { setToken, setRole, setCarrinho } = useContext( StoreContext );
+    const { setToken, setRole, setCarrinho, setUsuario } = useContext( StoreContext );
     const history = useHistory();
 
     function onChange ( event ) {
@@ -64,7 +73,10 @@ const UserLogin = () => {
             const token = res.data.jwt;
             const role = res.data.role;
 
+            const usuario = await retornaUsuario( values.username );
+
             setToken( token );
+            setUsuario( usuario );
             setRole( getRoleCode( role ) );
             setCarrinho( [] );
             return history.push( '/' );
@@ -78,30 +90,24 @@ const UserLogin = () => {
     }
 
     return (
-        <PageCenter >
-            <PageHeader />
-            <div className="user-login">
-                <h1 className="user-login__title">Login</h1>
-                <Form onSubmit={ onSubmit }>
-                    <Form.Field
-                        control={ Input } label='Usuário' name='user' required
-                        type='text' onChange={ onChange } value={ values.user }
-                        error={ showError }
-                    />
-                    <Form.Field
-                        control={ Input } label='Senha' name='password' required
-                        type='password' onChange={ onChange } value={ values.password }
-                        error={ showError && <Label content='Usuario ou senha incorretos' /> }
-                    />
-                    <Form.Field className="centralize">
-                        <p onClick={ onClick } >Não possui uma conta? Faça seu cadastro</p>
-                    </Form.Field>
-                    <Form.Field className="user-login_button"
-                        control={ Button } type='submit' content='Entrar'
-                    />
-                </Form>
-            </div>
-        </PageCenter >
+        <Form onSubmit={ onSubmit }>
+            <Form.Field
+                control={ Input } label='Usuário' name='user' required
+                type='text' onChange={ onChange } value={ values.user }
+                error={ showError }
+            />
+            <Form.Field
+                control={ Input } label='Senha' name='password' required
+                type='password' onChange={ onChange } value={ values.password }
+                error={ showError && <Label content='Usuario ou senha incorretos' /> }
+            />
+            <Form.Field className="centralize">
+                <p onClick={ onClick } >Não possui uma conta? Faça seu cadastro</p>
+            </Form.Field>
+            <Form.Field className="user-login_button"
+                control={ Button } type='submit' content='Entrar'
+            />
+        </Form>
     );
 };
 

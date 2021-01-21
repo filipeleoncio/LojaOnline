@@ -2,7 +2,6 @@ export default class Produto {
     id;
     nome;
     preco;
-    imagem;
     descricao;
     quantidade;
     qtdCarrinho;
@@ -33,11 +32,11 @@ export default class Produto {
      * @Summary Atualiza o carrinho de acordo com a operação
      * @param op Operação equivalente ('Somar', 'Subtrair')
      */
-    atualizaCarrinho ( op ) {
-        if ( op === 'somar' )
+    atualizaCarrinho ( op, qtdMax ) {
+        if ( op === 'somar' && this.qtdCarrinho + 1 <= qtdMax )
             this.qtdCarrinho += 1;
         else
-            if ( this.qtdCarrinho > 0 )
+            if ( op === 'subtrair' && this.qtdCarrinho > 0 )
                 this.qtdCarrinho -= 1;
     }
 };

@@ -26,28 +26,6 @@ public class ProdutoResource {
         return produtoService.buscarProdutos();
     }
 
-    /*
-    @GetMapping("/teste")
-    public List<Produto> listaProdutosTeste(){
-        return produtoService.buscarProdutos();
-    }
-    */
-
-    /*
-    @GetMapping("/testeP")
-    public JSONObject produtoTeste(){
-        Produto produto = produtoService.consultarProdutoPorNome("produtoTeste2");
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("nome", produto.getNome());
-        jsonObject.put("preco", produto.getPreco());
-        jsonObject.put("descricao", produto.getDescricao());
-        jsonObject.put("quantidade", produto.getQuantidade());
-        jsonObject.put("img", produto.getFile());
-
-        return jsonObject;
-    }
-    */
 
     @GetMapping("/verificaNomeProduto")
     public Boolean verificaUsername(@RequestParam String nomeProduto){
@@ -76,6 +54,11 @@ public class ProdutoResource {
     @PostMapping("/listaProdutos")
     public List<Produto> salvarListaProduto(@RequestBody List<Produto> produtos){
         return produtoService.salvarListaProdutos(produtos);
+    }
+
+    @PutMapping
+    public void finalizaPedido(@RequestBody List<Produto> carrinho){
+        produtoService.finalizaPedido(carrinho);
     }
 
     @DeleteMapping

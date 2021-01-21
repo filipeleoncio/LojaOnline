@@ -13,14 +13,10 @@ const ItemDimmer = ( { children, isDimmed, handleDimmer, listItem, list, setList
         }
         else {
             remocaoProduto( listItem );
-            // list.splice( list.indexOf( listItem ), 1 );
-            // setList( [ ...list ] );
+            let carrinhoItem = list.find( ( itemCarrinho ) => itemCarrinho.id === listItem.id );
+            list.splice( list.indexOf( carrinhoItem ), 1 );
+            setList( [ ...list ] );
         }
-
-        // list.splice( list.indexOf( listItem ), 1 );
-        // setList( [ ...list ] );
-        // if ( remocaoProduto )
-        //     remocaoProduto( listItem );
     }
 
     return (

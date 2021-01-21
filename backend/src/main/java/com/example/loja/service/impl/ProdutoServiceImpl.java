@@ -56,4 +56,13 @@ public class ProdutoServiceImpl implements ProdutoService {
     public void removeProdutoPorId(Integer idProduto) {
         produtoRepository.deleteById(idProduto);
     }
+
+    @Override
+    public void finalizaPedido(List<Produto> carrinho) {
+        for(Produto produto : carrinho){
+            Produto prod = produtoRepository.findByNome(produto.getNome());
+            prod.baixarEstoque(produto.getQtdCarrinho());
+            produtoRepository.save(prod);
+        }
+    }
 }

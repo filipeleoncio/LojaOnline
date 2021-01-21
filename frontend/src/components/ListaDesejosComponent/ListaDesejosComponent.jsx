@@ -4,30 +4,27 @@ import { Grid, GridColumn, Item, Image } from 'semantic-ui-react';
 import Produto from '../../classes/Produto';
 import { Api } from '../../utils/apiData';
 import { imgBase } from '../../utils/imgBase';
-// import roleNames from '../../utils/permissionLevel';
 import BotoesLoja from '../BotoesLoja/BotoesLoja';
-// import { If } from '../If/If';
 import ItemDimmer from '../ItemDimmer/ItemDimmer';
 import StoreContext from '../store/Context';
-import './CompProduto.css';
 
-const CompProduto = () => {
-    const { carrinho, setCarrinho } = useContext( StoreContext );
-    const { produtos, setProdutos } = useContext( StoreContext );
+const ListaDesejosComponent = () => {
     const [ itemDimmer, setItemDimmer ] = useState( [] );
+    const [ listaDesejos, setListaDesejos ] = useState( [] );
     const [ update, setUpdate ] = useState( false );
+    const { usuario, produtos, carrinho, setCarrinho } = useContext( StoreContext );
 
     useEffect( () => {
         /**
          * @Summary Busca os produtos no banco e seta a variavel
-         * responsável pelo dimmer de cada item da loja
+         * responsável pelo dimmer de cada item da lista de desejos
          */
         const fetchData = async () => {
             try {
-                const res = await axios.get( Api.url + Api.produto );
-                const resProdutos = res.data;
+                const res = await axios.get( Api.url + Api.listaDesejos );
+                const resDesejos = res.data;
                 let itens = [];
-                const listaProdutos = resProdutos.map( ( produto ) => {
+                const listaDesejos = resDesejos.map( ( produto ) => {
 
                     const prodObj = new Produto(
                         produto.id,
@@ -43,22 +40,22 @@ const CompProduto = () => {
                     } ];
                     return prodObj;
                 } );
-                setProdutos( listaProdutos );
+                setListaDesejos( listaDesejos );
                 setItemDimmer( itens );
                 setUpdate( false );
             }
             catch ( err ) {
-                const error = 'Erro app -> buscandoProdutos; Erro: ' + err;
+                const error = 'Erro app -> buscandoListaDesejos; Erro: ' + err;
                 console.log( error );
                 throw err;
             }
         };
         fetchData();
-    }, [ setProdutos, update ] );
+    }, [ listaDesejos, update ] );
 
     /**
-     * @Summary Atualiza o dimmer do item na loja de acordo com o status
-     * @param id Id do item na loja
+     * @Summary Atualiza o dimmer do item na lista de desejos de acordo com o status
+     * @param id Id do item na lista de desejos
      * @param status Novo status do dimmer
      */
     function handleDimmer ( id, status ) {
@@ -69,7 +66,7 @@ const CompProduto = () => {
     }
 
     /**
-     * @Summary Retorna o status do dimmer do item na loja
+     * @Summary Retorna o status do dimmer do item na lista de desejos
      * @param id Id do item equivalente
      */
     function getIsDimmerAssociado ( id ) {
@@ -79,7 +76,6 @@ const CompProduto = () => {
         }
         return false;
     }
-
 
     function adicionaCarrinho ( prod ) {
 
@@ -114,36 +110,32 @@ const CompProduto = () => {
         }
     }
 
-    function adicionaListaDesejos () {
-
-    }
-
     /**
-     * @Sumamry Remove o produto da loja
+     * @Sumamry Remove o produto da lista de desejos
      * @param prod Produto a ser removido
      */
-    async function removeProduto ( prod ) {
+    async function removeProdutoListaDesejos ( prod ) {
         try {
-            await axios.delete( Api.url + Api.deletaProduto( prod.id ) );
+            await axios.put( Api.url + Api.listaDesejos( usuario.userName ), prod );
             setUpdate( true );
         }
         catch ( err ) {
-            const error = 'Erro app -> removeProduto; Erro: ' + err;
+            const error = 'Erro app -> removeProdutoListaDesejos; Erro: ' + err;
             console.log( error );
             throw err;
         }
     }
 
-    if ( produtos ) {
+    if ( listaDesejos ) {
         return (
-            <Grid >
-                { produtos.map( ( prod, index ) => (
+            <Grid>
+                {listaDesejos.map( ( prod, index ) => (
                     <ItemDimmer key={ index }
                         isDimmed={ getIsDimmerAssociado( prod.id ) }
                         handleDimmer={ handleDimmer }
-                        listItem={ prod } prodList={ produtos } list={ carrinho } setList={ setCarrinho }
-                        remocaoProduto={ removeProduto }
-                        headerMessage={ `Deseja remover ${ prod.nome } da loja?` }
+                        listItem={ prod } list={ listaDesejos } setList={ setListaDesejos }
+                        remocaoProduto={ removeProdutoListaDesejos }
+                        headerMessage={ `Deseja remover ${ prod.nome } da lista de desejos` }
                     >
                         <GridColumn width={ 3 }>
                             <Image src={ prod.imagem } fluid />
@@ -163,25 +155,17 @@ const CompProduto = () => {
                         <GridColumn width={ 4 }>
                             <BotoesLoja
                                 adicionaCarrinho={ adicionaCarrinho }
-                                adicionaListaDesejos={ adicionaListaDesejos }
                                 handleDimmer={ handleDimmer }
                                 prod={ prod }
                             />
-                            {/* <If condition={ role >= roleNames.USER }>
-                                <Button className='buttonsDisplay1' onClick={ () => adicionaCarrinho( prod ) } >Adicionar ao carrinho</Button>
-
-                            </If>
-                            <If condition={ role >= roleNames.ADMIN }>
-                                <Button className='buttonsDisplay2' onClick={ () => handleDimmer( prod.id, true ) } >Remover Produto</Button>
-                            </If> */}
                         </GridColumn>
                     </ItemDimmer>
-                ) )
-                }
-            </Grid >
-        )
+
+                ) ) }
+            </Grid>
+        );
     }
     return null;
-}
 
-export default CompProduto;
+}
+export default ListaDesejosComponent;
