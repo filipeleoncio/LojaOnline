@@ -5,9 +5,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProdutoRepository extends CrudRepository<Produto, Integer> {
     public List<Produto> findAll();
+    public Produto findByProdutoId(Integer idProduto);
     public Produto findByNome(String nomeProduto);
 }

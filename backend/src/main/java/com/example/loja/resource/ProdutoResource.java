@@ -29,7 +29,7 @@ public class ProdutoResource {
 
     @GetMapping("/verificaNomeProduto")
     public Boolean verificaUsername(@RequestParam String nomeProduto){
-        if(produtoService.consultarProdutoPorNome(nomeProduto) != null)
+        if(produtoService.buscarProdutoPorNome(nomeProduto) != null)
             return true;
         return false;
     }
@@ -63,7 +63,7 @@ public class ProdutoResource {
 
     @DeleteMapping
     public void removeProduto(@RequestParam String nomeProduto){
-        Produto produto = produtoService.consultarProdutoPorNome(nomeProduto);
+        Produto produto = produtoService.buscarProdutoPorNome(nomeProduto);
         produtoService.removeProduto(produto);
     }
 

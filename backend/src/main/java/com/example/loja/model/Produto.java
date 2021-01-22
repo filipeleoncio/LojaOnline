@@ -4,12 +4,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.List;
 
 @Entity
+@Table(name = "Produto")
 public class Produto {
     @GeneratedValue
     @Id
-    private Integer id;
+    @Column(name = "produto_id")
+    private Integer produtoId;
 
     private String nome;
 
@@ -25,13 +28,8 @@ public class Produto {
     @Column(name = "file", columnDefinition="BLOB")
     private byte[] file;
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
+    @ManyToMany(mappedBy = "wishList")
+    private List<Usuario> usuarioList;
 
     public Produto() {
 
@@ -62,12 +60,12 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getProdutoId() {
+        return produtoId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setProdutoId(Integer produtoId) {
+        this.produtoId = produtoId;
     }
 
     public String getNome() {
@@ -86,12 +84,22 @@ public class Produto {
         this.preco = preco;
     }
 
+
     public Integer getQtdCarrinho() {
         return qtdCarrinho;
     }
 
     public void setQtdCarrinho(Integer qtdCarrinho) {
         this.qtdCarrinho = qtdCarrinho;
+    }
+
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 
     public void baixarEstoque(Integer quantidade){

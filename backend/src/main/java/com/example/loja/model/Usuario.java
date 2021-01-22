@@ -8,23 +8,30 @@ import java.util.List;
 public class Usuario {
     @GeneratedValue
     @Id
-    private Integer id;
+    @Column(name = "usuario_id")
+    private Integer usuarioId;
 
     private String userName;
-    private String firtName;
+    private String firstName;
     private String lastName;
     private String email;
     private String password;
     private String role;
 
-    //private List<Produto> wishList;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "Usuario_Produto",
+            joinColumns = {@JoinColumn(name = "usuario_id")},
+            inverseJoinColumns = {@JoinColumn(name = "produto_id")}
+    )
+    private List<Produto> wishList;
 
-    public Integer getId() {
-        return id;
+    public Integer getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUsuarioId(Integer usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public String getUserName() {
@@ -35,12 +42,12 @@ public class Usuario {
         this.userName = userName;
     }
 
-    public String getFirtName() {
-        return firtName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirtName(String firtName) {
-        this.firtName = firtName;
+    public void setFirstName(String firtName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -75,7 +82,6 @@ public class Usuario {
         this.role = role;
     }
 
-    /*
     public List<Produto> getWishList() {
         return wishList;
     }
@@ -85,11 +91,10 @@ public class Usuario {
     }
 
     public void addWishList(Produto produto){
-        wishList.add(produto);
+        this.wishList.add(produto);
     }
 
     public void removeWishList(Produto produto){
-        wishList.remove(produto);
+        this.wishList.remove(produto);
     }
-    */
 }

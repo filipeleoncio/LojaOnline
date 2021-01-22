@@ -151,7 +151,7 @@ const CarrinhoCompras = () => {
         );
     }
     return (
-        <Header as='h1' textAlign='center' color='blue'>Seu Carrinho esta Vazio!</Header>
+        <Header as='h1' textAlign='center' color='blue'>Seu Carrinho está Vazio!</Header>
     );
 };
 

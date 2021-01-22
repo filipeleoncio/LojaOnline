@@ -2,6 +2,7 @@ export default class Produto {
     id;
     nome;
     preco;
+    imagem;
     descricao;
     quantidade;
     qtdCarrinho;
@@ -38,5 +39,10 @@ export default class Produto {
         else
             if ( op === 'subtrair' && this.qtdCarrinho > 0 )
                 this.qtdCarrinho -= 1;
+    }
+
+    getFile () {
+        let file = this.imagem.slice( 23 );
+        return file;
     }
 };

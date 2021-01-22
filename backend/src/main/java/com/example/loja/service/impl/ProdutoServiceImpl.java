@@ -29,6 +29,16 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
+    public Produto buscarProdutoPorId(Integer idProduto) {
+        return produtoRepository.findByProdutoId(idProduto);
+    }
+
+    @Override
+    public Produto buscarProdutoPorNome(String nomeProduto) {
+        return produtoRepository.findByNome(nomeProduto);
+    }
+
+    @Override
     public List<Produto> salvarListaProdutos(List<Produto> produtos) {
         List<Produto> resultado = new ArrayList<>();
 
@@ -40,11 +50,6 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
 
         return resultado;
-    }
-
-    @Override
-    public Produto consultarProdutoPorNome(String nomeProduto) {
-        return produtoRepository.findByNome(nomeProduto);
     }
 
     @Override

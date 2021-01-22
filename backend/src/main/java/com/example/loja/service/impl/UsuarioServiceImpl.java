@@ -43,7 +43,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    /*
     @Override
     public List<Produto> buscaWishList(String username) {
         Usuario user = usuarioRepository.findByUserName(username);
@@ -63,5 +62,4 @@ public class UsuarioServiceImpl implements UsuarioService {
         user.removeWishList(produto);
         return usuarioRepository.save(user);
     }
-    */
 }

@@ -23,7 +23,6 @@ const PagesHome = () => {
                 setLogoutRealizado( false );
             }
         }
-
         setDimmer();
     }, [ logoutRealizado, setLogoutRealizado ] );
 

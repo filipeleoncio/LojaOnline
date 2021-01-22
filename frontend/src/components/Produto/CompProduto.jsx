@@ -4,9 +4,7 @@ import { Grid, GridColumn, Item, Image } from 'semantic-ui-react';
 import Produto from '../../classes/Produto';
 import { Api } from '../../utils/apiData';
 import { imgBase } from '../../utils/imgBase';
-// import roleNames from '../../utils/permissionLevel';
 import BotoesLoja from '../BotoesLoja/BotoesLoja';
-// import { If } from '../If/If';
 import ItemDimmer from '../ItemDimmer/ItemDimmer';
 import StoreContext from '../store/Context';
 import './CompProduto.css';
@@ -14,6 +12,7 @@ import './CompProduto.css';
 const CompProduto = () => {
     const { carrinho, setCarrinho } = useContext( StoreContext );
     const { produtos, setProdutos } = useContext( StoreContext );
+    const { usuario } = useContext( StoreContext );
     const [ itemDimmer, setItemDimmer ] = useState( [] );
     const [ update, setUpdate ] = useState( false );
 
@@ -22,7 +21,7 @@ const CompProduto = () => {
          * @Summary Busca os produtos no banco e seta a variavel
          * responsável pelo dimmer de cada item da loja
          */
-        const fetchData = async () => {
+        const fetchDataProdutos = async () => {
             try {
                 const res = await axios.get( Api.url + Api.produto );
                 const resProdutos = res.data;
@@ -30,7 +29,7 @@ const CompProduto = () => {
                 const listaProdutos = resProdutos.map( ( produto ) => {
 
                     const prodObj = new Produto(
-                        produto.id,
+                        produto.produtoId,
                         produto.nome,
                         produto.preco,
                         imgBase + produto.file,
@@ -53,7 +52,7 @@ const CompProduto = () => {
                 throw err;
             }
         };
-        fetchData();
+        fetchDataProdutos();
     }, [ setProdutos, update ] );
 
     /**
@@ -114,8 +113,36 @@ const CompProduto = () => {
         }
     }
 
-    function adicionaListaDesejos () {
+    async function adicionaListaDesejos ( prod ) {
+        console.log( "antes da consulta" );
+        console.log( "usuario: ", usuario );
+        console.log( "username: ", usuario.userName );
+        console.log( "produto: ", prod );
 
+        let formData = new FormData();
+        formData.append( 'username', usuario.userName );
+        formData.append( 'produto', prod );
+        let data = {
+            'username': usuario.userName,
+            'produto': {
+                'produtoId': prod.id,
+                'nome': prod.nome,
+                'preco': prod.preco,
+                'descricao': prod.descricao,
+                'quantidade': prod.quantidade,
+                'file': prod.getFile(),
+            }
+        }
+        try {
+            const res = await axios.post( Api.url + Api.atualizaListaDesejos, data );
+            console.log( "adicionando produto: ", res );
+
+        }
+        catch ( err ) {
+            const error = 'Erro app -> adicionaListaDesejos; Erro: ' + err;
+            console.log( error );
+            throw err;
+        }
     }
 
     /**
@@ -167,13 +194,6 @@ const CompProduto = () => {
                                 handleDimmer={ handleDimmer }
                                 prod={ prod }
                             />
-                            {/* <If condition={ role >= roleNames.USER }>
-                                <Button className='buttonsDisplay1' onClick={ () => adicionaCarrinho( prod ) } >Adicionar ao carrinho</Button>
-
-                            </If>
-                            <If condition={ role >= roleNames.ADMIN }>
-                                <Button className='buttonsDisplay2' onClick={ () => handleDimmer( prod.id, true ) } >Remover Produto</Button>
-                            </If> */}
                         </GridColumn>
                     </ItemDimmer>
                 ) )

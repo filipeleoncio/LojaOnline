@@ -8,15 +8,15 @@ const PageHeader = () => {
     const { role } = useContext( StoreContext );
 
     function menuPathLogin () {
-        if ( role === roleNames.DEFAULT )
-            return '/Login';
-        return '/';
+        if ( role >= roleNames.USER )
+            return '/';
+        return '/login';
     }
 
     function menuInputLogin () {
-        if ( role === roleNames.DEFAULT )
-            return 'Login';
-        return 'Logout';
+        if ( role >= roleNames.USER )
+            return 'Logout';
+        return 'Login';
     }
 
     return (

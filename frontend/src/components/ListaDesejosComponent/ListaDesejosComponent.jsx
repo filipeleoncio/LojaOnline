@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, GridColumn, Item, Image } from 'semantic-ui-react';
+import { Grid, GridColumn, Item, Image, Header } from 'semantic-ui-react';
 import Produto from '../../classes/Produto';
 import { Api } from '../../utils/apiData';
 import { imgBase } from '../../utils/imgBase';
@@ -19,15 +19,16 @@ const ListaDesejosComponent = () => {
          * @Summary Busca os produtos no banco e seta a variavel
          * responsável pelo dimmer de cada item da lista de desejos
          */
-        const fetchData = async () => {
+        const fetchDataListaDesejos = async ( usuario ) => {
             try {
-                const res = await axios.get( Api.url + Api.listaDesejos );
+                const res = await axios.get( Api.url + Api.listaDesejos( usuario.userName ) );
                 const resDesejos = res.data;
+                console.log( "resDesejos: ", resDesejos );
                 let itens = [];
                 const listaDesejos = resDesejos.map( ( produto ) => {
 
                     const prodObj = new Produto(
-                        produto.id,
+                        produto.produtoId,
                         produto.nome,
                         produto.preco,
                         imgBase + produto.file,
@@ -50,8 +51,8 @@ const ListaDesejosComponent = () => {
                 throw err;
             }
         };
-        fetchData();
-    }, [ listaDesejos, update ] );
+        fetchDataListaDesejos( usuario );
+    }, [ update, usuario ] );
 
     /**
      * @Summary Atualiza o dimmer do item na lista de desejos de acordo com o status
@@ -126,9 +127,10 @@ const ListaDesejosComponent = () => {
         }
     }
 
-    if ( listaDesejos ) {
+    if ( listaDesejos.length > 0 ) {
         return (
             <Grid>
+                { console.log( "Lista desejos: ", listaDesejos ) }
                 {listaDesejos.map( ( prod, index ) => (
                     <ItemDimmer key={ index }
                         isDimmed={ getIsDimmerAssociado( prod.id ) }
@@ -165,7 +167,9 @@ const ListaDesejosComponent = () => {
             </Grid>
         );
     }
-    return null;
+    return (
+        <Header as='h1' textAlign='center' color='blue'>Sua Lista de Desejos está Vazio!</Header>
+    );
 
 }
 export default ListaDesejosComponent;

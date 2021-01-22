@@ -73,7 +73,8 @@ const UserLogin = () => {
             const token = res.data.jwt;
             const role = res.data.role;
 
-            const usuario = await retornaUsuario( values.username );
+            const resUsuario = await retornaUsuario( values.user );
+            const usuario = resUsuario.data;
 
             setToken( token );
             setUsuario( usuario );

@@ -8,5 +8,6 @@ export const Api = {
     verificarUsername: ( username ) => `/usuario/verificaUsername?username=${ username }`,
     verificaNomeProduto: ( nomeProduto ) => `/produto/verificaNomeProduto?nomeProduto=${ nomeProduto }`,
     deletaProduto: ( idProduto ) => `/produto/deletaProdutoPorId?idProduto=${ idProduto }`,
-    listaDesejos: ( username ) => `usuario/listaDesejos?username=${ username }`,
+    listaDesejos: ( username ) => `/usuario/listaDesejos?username=${ username }`,
+    atualizaListaDesejos: `/usuario/listaDesejos`,
 };
