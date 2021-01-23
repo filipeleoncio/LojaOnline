@@ -8,6 +8,7 @@ const StoreProvider = ( { children } ) => {
     const [ usuario, setUsuario ] = useStorage( 'usuario' );
     const [ produtos, setProdutos ] = useStorage( 'produtos' );
     const [ carrinho, setCarrinho ] = useStorage( 'carrinho' );
+    const [ listaDesejos, setListaDesejos ] = useStorage( 'listaDesejos' );
     const [ logoutRealizado, setLogoutRealizado ] = useStorage( 'logoutRealizado' );
 
     return (
@@ -23,6 +24,8 @@ const StoreProvider = ( { children } ) => {
                 setProdutos,
                 carrinho,
                 setCarrinho,
+                listaDesejos,
+                setListaDesejos,
                 logoutRealizado,
                 setLogoutRealizado,
             } }

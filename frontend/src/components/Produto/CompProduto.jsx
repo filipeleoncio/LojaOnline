@@ -13,6 +13,7 @@ const CompProduto = () => {
     const { carrinho, setCarrinho } = useContext( StoreContext );
     const { produtos, setProdutos } = useContext( StoreContext );
     const { usuario } = useContext( StoreContext );
+    const { listaDesejos } = useContext( StoreContext );
     const [ itemDimmer, setItemDimmer ] = useState( [] );
     const [ update, setUpdate ] = useState( false );
 
@@ -37,7 +38,7 @@ const CompProduto = () => {
                         produto.quantidade
                     );
                     itens = [ ...itens, {
-                        'id': produto.id,
+                        'id': produto.produtoId,
                         'res': false
                     } ];
                     return prodObj;
@@ -83,7 +84,7 @@ const CompProduto = () => {
     function adicionaCarrinho ( prod ) {
 
         const prodEscolhido = produtos.find( ( produto ) => produto.id === prod.id );
-
+        const qtdMax = prodEscolhido.quantidade;
         /**
          * @Summary Produto escolhido pelo cliente a ser inserido no carrinho
          */
@@ -99,26 +100,21 @@ const CompProduto = () => {
         if ( carrinho.length > 0 ) {
             const produtoJaNoCarrinho = carrinho.find( ( produto ) => produto.id === prodEscolhido.id );
             if ( produtoJaNoCarrinho ) {
-                produtoJaNoCarrinho.incrementaNoCarrinho();
+                produtoJaNoCarrinho.incrementaNoCarrinho( qtdMax );
                 setCarrinho( [ ...carrinho ] );
             }
             else {
-                produtoInserido.incrementaNoCarrinho();
+                produtoInserido.incrementaNoCarrinho( qtdMax );
                 setCarrinho( [ ...carrinho, produtoInserido ] );
             }
         }
         else {
-            produtoInserido.incrementaNoCarrinho();
+            produtoInserido.incrementaNoCarrinho( qtdMax );
             setCarrinho( [ ...carrinho, produtoInserido ] );
         }
     }
 
     async function adicionaListaDesejos ( prod ) {
-        console.log( "antes da consulta" );
-        console.log( "usuario: ", usuario );
-        console.log( "username: ", usuario.userName );
-        console.log( "produto: ", prod );
-
         let formData = new FormData();
         formData.append( 'username', usuario.userName );
         formData.append( 'produto', prod );
@@ -134,9 +130,8 @@ const CompProduto = () => {
             }
         }
         try {
-            const res = await axios.post( Api.url + Api.atualizaListaDesejos, data );
-            console.log( "adicionando produto: ", res );
-
+            if ( !listaDesejos.find( ( item ) => item.id === prod.id ) )
+                await axios.post( Api.url + Api.atualizaListaDesejos, data );
         }
         catch ( err ) {
             const error = 'Erro app -> adicionaListaDesejos; Erro: ' + err;

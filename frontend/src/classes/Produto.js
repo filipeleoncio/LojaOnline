@@ -21,8 +21,9 @@ export default class Produto {
         this.quantidade -= qtd;
     }
 
-    incrementaNoCarrinho () {
-        this.qtdCarrinho += 1;
+    incrementaNoCarrinho ( qtdMax ) {
+        if ( this.qtdCarrinho + 1 <= qtdMax )
+            this.qtdCarrinho += 1;
     }
 
     decrementaNoCarrinho () {

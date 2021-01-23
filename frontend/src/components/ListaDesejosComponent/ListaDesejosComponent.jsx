@@ -1,16 +1,16 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, GridColumn, Item, Image, Header } from 'semantic-ui-react';
+import { Grid, GridColumn, Item, Image, Header, Button } from 'semantic-ui-react';
 import Produto from '../../classes/Produto';
 import { Api } from '../../utils/apiData';
 import { imgBase } from '../../utils/imgBase';
-import BotoesLoja from '../BotoesLoja/BotoesLoja';
+import { If } from '../If/If';
 import ItemDimmer from '../ItemDimmer/ItemDimmer';
 import StoreContext from '../store/Context';
 
 const ListaDesejosComponent = () => {
     const [ itemDimmer, setItemDimmer ] = useState( [] );
-    const [ listaDesejos, setListaDesejos ] = useState( [] );
+    const { listaDesejos, setListaDesejos } = useContext( StoreContext );
     const [ update, setUpdate ] = useState( false );
     const { usuario, produtos, carrinho, setCarrinho } = useContext( StoreContext );
 
@@ -36,7 +36,7 @@ const ListaDesejosComponent = () => {
                         produto.quantidade
                     );
                     itens = [ ...itens, {
-                        'id': produto.id,
+                        'id': produto.produtoId,
                         'res': false
                     } ];
                     return prodObj;
@@ -52,7 +52,7 @@ const ListaDesejosComponent = () => {
             }
         };
         fetchDataListaDesejos( usuario );
-    }, [ update, usuario ] );
+    }, [ setListaDesejos, update, usuario ] );
 
     /**
      * @Summary Atualiza o dimmer do item na lista de desejos de acordo com o status
@@ -61,6 +61,7 @@ const ListaDesejosComponent = () => {
      */
     function handleDimmer ( id, status ) {
         if ( itemDimmer.length > 0 ) {
+            console.log( itemDimmer );
             itemDimmer.find( ( item ) => item.id === id ).res = status;
             setItemDimmer( [ ...itemDimmer ] );
         }
@@ -116,8 +117,22 @@ const ListaDesejosComponent = () => {
      * @param prod Produto a ser removido
      */
     async function removeProdutoListaDesejos ( prod ) {
+        let formData = new FormData();
+        formData.append( 'username', usuario.userName );
+        formData.append( 'produto', prod );
+        let data = {
+            'username': usuario.userName,
+            'produto': {
+                'produtoId': prod.id,
+                'nome': prod.nome,
+                'preco': prod.preco,
+                'descricao': prod.descricao,
+                'quantidade': prod.quantidade,
+                'file': prod.getFile(),
+            }
+        }
         try {
-            await axios.put( Api.url + Api.listaDesejos( usuario.userName ), prod );
+            await axios.put( Api.url + Api.atualizaListaDesejos, data );
             setUpdate( true );
         }
         catch ( err ) {
@@ -127,7 +142,14 @@ const ListaDesejosComponent = () => {
         }
     }
 
-    if ( listaDesejos.length > 0 ) {
+    function produtoDisponivel ( prod ) {
+        const produto = produtos.find( ( item ) => item.id === prod.id )
+        if ( produto.quantidade > 0 )
+            return true;
+        return false;
+    }
+
+    if ( listaDesejos ) {
         return (
             <Grid>
                 { console.log( "Lista desejos: ", listaDesejos ) }
@@ -155,11 +177,10 @@ const ListaDesejosComponent = () => {
                             </Item.Group>
                         </GridColumn>
                         <GridColumn width={ 4 }>
-                            <BotoesLoja
-                                adicionaCarrinho={ adicionaCarrinho }
-                                handleDimmer={ handleDimmer }
-                                prod={ prod }
-                            />
+                            <If condition={ produtoDisponivel( prod ) }>
+                                <Button className='buttonsDisplay1' onClick={ () => adicionaCarrinho( prod ) } >Adicionar ao carrinho</Button>
+                            </If>
+                            <Button className='buttonsDisplay2' onClick={ () => handleDimmer( prod.id, true ) } >Remover da Lista</Button>
                         </GridColumn>
                     </ItemDimmer>
 

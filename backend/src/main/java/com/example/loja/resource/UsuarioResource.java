@@ -45,21 +45,20 @@ public class UsuarioResource {
     }
 
     @PutMapping("/listaDesejos")
-    //public Usuario removeDaListaDeDesejos(@RequestParam String username, @RequestBody Produto produto){
-    public Usuario removeDaListaDeDesejos(@RequestParam String username, @RequestParam Produto produto){
+    //public Usuario removeDaListaDeDesejos(@RequestParam String username, @RequestParam Produto produto){
+    public Usuario removeDaListaDeDesejos(@RequestBody UsuarioProdutoDTO usuarioProdutoDTO){
+        String username = usuarioProdutoDTO.getUsername();
+        Produto produto = produtoService.buscarProdutoPorId(usuarioProdutoDTO.getProduto().getProdutoId());
+        
         return usuarioService.removeWishList(username, produto);
     }
 
     @PostMapping(value = "/listaDesejos")
-    public Produto salvaNaListaDeDesejos(@RequestBody UsuarioProdutoDTO usuarioProdutoDTO){
+    public Usuario salvaNaListaDeDesejos(@RequestBody UsuarioProdutoDTO usuarioProdutoDTO){
         String username = usuarioProdutoDTO.getUsername();
         Produto produto = produtoService.buscarProdutoPorId(usuarioProdutoDTO.getProduto().getProdutoId());
-        //Produto produto = produtoService.buscarProdutoPorNome(usuarioProdutoDTO.getProduto().getNome());
 
-        //System.out.println("Produto: " + usuarioProdutoDTO.getProduto().getProdutoId() + ": " + produto.getProdutoId());
-        usuarioService.insereWishList(username, produto);
-        //return usuarioService.insereWishList(username, produto);
-        return produto;
+        return usuarioService.insereWishList(username, produto);
     }
 
     @PostMapping

@@ -12,6 +12,8 @@ const StoreContext = createContext( {
     setProdutos: () => { },
     carrinho: [],
     setCarrinho: () => { },
+    listaDesejos: [],
+    setListaDesejos: () => { },
     logoutRealizado: false,
     setLogoutRealizado: () => { },
 } );

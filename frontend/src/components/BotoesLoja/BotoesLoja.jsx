@@ -17,7 +17,7 @@ const BotoesLoja = ( { adicionaCarrinho, adicionaListaDesejos, handleDimmer, pro
                 <Button className='buttonsDisplay2' onClick={ () => adicionaListaDesejos( prod ) } >Adicionar a lista de desejos</Button>
             </If>
             <If condition={ role === roleNames.ADMIN }>
-                <Button className='buttonsDisplay1' onClick={ () => adicionaCarrinho( prod ) } >Adicionar ao carrinho</Button>
+                {/* <Button className='buttonsDisplay1' onClick={ () => adicionaCarrinho( prod ) } >Adicionar ao carrinho</Button> */ }
                 <Button className='buttonsDisplay2' onClick={ () => handleDimmer( prod.id, true ) } >Remover Produto</Button>
             </If>
         </div>
