@@ -13,8 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioResource {
-    private UsuarioService usuarioService;
-    private ProdutoService produtoService;
+    private final UsuarioService usuarioService;
+    private final ProdutoService produtoService;
 
     @Autowired
     public UsuarioResource(UsuarioService usuarioService, ProdutoService produtoService) {
@@ -29,9 +29,7 @@ public class UsuarioResource {
 
     @GetMapping("/verificaUsername")
     public Boolean verificaUsername(@RequestParam String username){
-        if(usuarioService.consultarUsuarioPorNome(username) != null)
-            return true;
-        return false;
+        return usuarioService.consultarUsuarioPorNome(username) != null;
     }
 
     @GetMapping("/buscaUsuarioPorNome")
@@ -45,11 +43,10 @@ public class UsuarioResource {
     }
 
     @PutMapping("/listaDesejos")
-    //public Usuario removeDaListaDeDesejos(@RequestParam String username, @RequestParam Produto produto){
     public Usuario removeDaListaDeDesejos(@RequestBody UsuarioProdutoDTO usuarioProdutoDTO){
         String username = usuarioProdutoDTO.getUsername();
         Produto produto = produtoService.buscarProdutoPorId(usuarioProdutoDTO.getProduto().getProdutoId());
-        
+
         return usuarioService.removeWishList(username, produto);
     }
 

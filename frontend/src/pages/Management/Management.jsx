@@ -16,8 +16,8 @@ const PagesManagement = () => {
         <PageCenter>
             <PageHeader />
             <Header as='h1' textAlign='center'>Pagina de gerenciamento</Header>
-            <Button onClick={ () => onSubmit( '/cadastro' ) }>Cadastrar Usuário</Button>
-            <Button onClick={ () => onSubmit( '/cadastrarProduto' ) }>Cadastrar Produto</Button>
+            <Button onClick={ () => onSubmit( '/cadastroUsuario' ) }>Cadastrar Usuário</Button>
+            < Button onClick={ () => onSubmit( '/cadastroProduto' ) }>Cadastrar Produto</Button>
         </PageCenter >
     );
 }

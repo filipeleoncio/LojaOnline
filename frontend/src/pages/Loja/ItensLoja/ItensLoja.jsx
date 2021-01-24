@@ -1,31 +1,33 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, GridColumn, Item, Image, Header, Button } from 'semantic-ui-react';
-import Produto from '../../classes/Produto';
-import { Api } from '../../utils/apiData';
-import { imgBase } from '../../utils/imgBase';
-import { If } from '../If/If';
-import ItemDimmer from '../ItemDimmer/ItemDimmer';
-import StoreContext from '../store/Context';
+import { Grid, GridColumn, Item, Image } from 'semantic-ui-react';
+import Produto from '../../../classes/Produto';
+import { Api } from '../../../utils/apiData';
+import { imgBase } from '../../../utils/imgBase';
+import BotoesLoja from '../../../components/BotoesLoja/BotoesLoja';
+import ItemDimmer from '../../../components/ItemDimmer/ItemDimmer';
+import StoreContext from '../../../components/store/Context';
+import './ItensLoja.css';
 
-const ListaDesejosComponent = () => {
+const ItensLoja = () => {
+    const { carrinho, setCarrinho } = useContext( StoreContext );
+    const { produtos, setProdutos } = useContext( StoreContext );
+    const { usuario } = useContext( StoreContext );
+    const { listaDesejos } = useContext( StoreContext );
     const [ itemDimmer, setItemDimmer ] = useState( [] );
-    const { listaDesejos, setListaDesejos } = useContext( StoreContext );
     const [ update, setUpdate ] = useState( false );
-    const { usuario, produtos, carrinho, setCarrinho } = useContext( StoreContext );
 
     useEffect( () => {
         /**
          * @Summary Busca os produtos no banco e seta a variavel
-         * responsável pelo dimmer de cada item da lista de desejos
+         * responsável pelo dimmer de cada item da loja
          */
-        const fetchDataListaDesejos = async ( usuario ) => {
+        const fetchDataProdutos = async () => {
             try {
-                const res = await axios.get( Api.url + Api.listaDesejos( usuario.userName ) );
-                const resDesejos = res.data;
-                console.log( "resDesejos: ", resDesejos );
+                const res = await axios.get( Api.url + Api.produto );
+                const resProdutos = res.data;
                 let itens = [];
-                const listaDesejos = resDesejos.map( ( produto ) => {
+                const listaProdutos = resProdutos.map( ( produto ) => {
 
                     const prodObj = new Produto(
                         produto.produtoId,
@@ -41,34 +43,33 @@ const ListaDesejosComponent = () => {
                     } ];
                     return prodObj;
                 } );
-                setListaDesejos( listaDesejos );
+                setProdutos( listaProdutos );
                 setItemDimmer( itens );
                 setUpdate( false );
             }
             catch ( err ) {
-                const error = 'Erro app -> buscandoListaDesejos; Erro: ' + err;
+                const error = 'Erro app -> buscandoProdutos; Erro: ' + err;
                 console.log( error );
                 throw err;
             }
         };
-        fetchDataListaDesejos( usuario );
-    }, [ setListaDesejos, update, usuario ] );
+        fetchDataProdutos();
+    }, [ setProdutos, update ] );
 
     /**
-     * @Summary Atualiza o dimmer do item na lista de desejos de acordo com o status
-     * @param id Id do item na lista de desejos
+     * @Summary Atualiza o dimmer do item na loja de acordo com o status
+     * @param id Id do item na loja
      * @param status Novo status do dimmer
      */
     function handleDimmer ( id, status ) {
         if ( itemDimmer.length > 0 ) {
-            console.log( itemDimmer );
             itemDimmer.find( ( item ) => item.id === id ).res = status;
             setItemDimmer( [ ...itemDimmer ] );
         }
     }
 
     /**
-     * @Summary Retorna o status do dimmer do item na lista de desejos
+     * @Summary Retorna o status do dimmer do item na loja
      * @param id Id do item equivalente
      */
     function getIsDimmerAssociado ( id ) {
@@ -79,10 +80,11 @@ const ListaDesejosComponent = () => {
         return false;
     }
 
+
     function adicionaCarrinho ( prod ) {
 
         const prodEscolhido = produtos.find( ( produto ) => produto.id === prod.id );
-
+        const qtdMax = prodEscolhido.quantidade;
         /**
          * @Summary Produto escolhido pelo cliente a ser inserido no carrinho
          */
@@ -98,25 +100,21 @@ const ListaDesejosComponent = () => {
         if ( carrinho.length > 0 ) {
             const produtoJaNoCarrinho = carrinho.find( ( produto ) => produto.id === prodEscolhido.id );
             if ( produtoJaNoCarrinho ) {
-                produtoJaNoCarrinho.incrementaNoCarrinho();
+                produtoJaNoCarrinho.incrementaNoCarrinho( qtdMax );
                 setCarrinho( [ ...carrinho ] );
             }
             else {
-                produtoInserido.incrementaNoCarrinho();
+                produtoInserido.incrementaNoCarrinho( qtdMax );
                 setCarrinho( [ ...carrinho, produtoInserido ] );
             }
         }
         else {
-            produtoInserido.incrementaNoCarrinho();
+            produtoInserido.incrementaNoCarrinho( qtdMax );
             setCarrinho( [ ...carrinho, produtoInserido ] );
         }
     }
 
-    /**
-     * @Sumamry Remove o produto da lista de desejos
-     * @param prod Produto a ser removido
-     */
-    async function removeProdutoListaDesejos ( prod ) {
+    async function adicionaListaDesejos ( prod ) {
         let formData = new FormData();
         formData.append( 'username', usuario.userName );
         formData.append( 'produto', prod );
@@ -132,34 +130,42 @@ const ListaDesejosComponent = () => {
             }
         }
         try {
-            await axios.put( Api.url + Api.atualizaListaDesejos, data );
-            setUpdate( true );
+            if ( !listaDesejos.find( ( item ) => item.id === prod.id ) )
+                await axios.post( Api.url + Api.atualizaListaDesejos, data );
         }
         catch ( err ) {
-            const error = 'Erro app -> removeProdutoListaDesejos; Erro: ' + err;
+            const error = 'Erro app -> adicionaListaDesejos; Erro: ' + err;
             console.log( error );
             throw err;
         }
     }
 
-    function produtoDisponivel ( prod ) {
-        const produto = produtos.find( ( item ) => item.id === prod.id )
-        if ( produto.quantidade > 0 )
-            return true;
-        return false;
+    /**
+     * @Sumamry Remove o produto da loja
+     * @param prod Produto a ser removido
+     */
+    async function removeProduto ( prod ) {
+        try {
+            await axios.delete( Api.url + Api.deletaProduto( prod.id ) );
+            setUpdate( true );
+        }
+        catch ( err ) {
+            const error = 'Erro app -> removeProduto; Erro: ' + err;
+            console.log( error );
+            throw err;
+        }
     }
 
-    if ( listaDesejos ) {
+    if ( produtos ) {
         return (
-            <Grid>
-                { console.log( "Lista desejos: ", listaDesejos ) }
-                {listaDesejos.map( ( prod, index ) => (
+            <Grid >
+                { produtos.map( ( prod, index ) => (
                     <ItemDimmer key={ index }
                         isDimmed={ getIsDimmerAssociado( prod.id ) }
                         handleDimmer={ handleDimmer }
-                        listItem={ prod } list={ listaDesejos } setList={ setListaDesejos }
-                        remocaoProduto={ removeProdutoListaDesejos }
-                        headerMessage={ `Deseja remover ${ prod.nome } da lista de desejos` }
+                        listItem={ prod } prodList={ produtos } list={ carrinho } setList={ setCarrinho }
+                        remocaoProduto={ removeProduto }
+                        headerMessage={ `Deseja remover ${ prod.nome } da loja?` }
                     >
                         <GridColumn width={ 3 }>
                             <Image src={ prod.imagem } fluid />
@@ -177,20 +183,20 @@ const ListaDesejosComponent = () => {
                             </Item.Group>
                         </GridColumn>
                         <GridColumn width={ 4 }>
-                            <If condition={ produtoDisponivel( prod ) }>
-                                <Button className='buttonsDisplay1' onClick={ () => adicionaCarrinho( prod ) } >Adicionar ao carrinho</Button>
-                            </If>
-                            <Button className='buttonsDisplay2' onClick={ () => handleDimmer( prod.id, true ) } >Remover da Lista</Button>
+                            <BotoesLoja
+                                adicionaCarrinho={ adicionaCarrinho }
+                                adicionaListaDesejos={ adicionaListaDesejos }
+                                handleDimmer={ handleDimmer }
+                                prod={ prod }
+                            />
                         </GridColumn>
                     </ItemDimmer>
-
-                ) ) }
-            </Grid>
-        );
+                ) )
+                }
+            </Grid >
+        )
     }
-    return (
-        <Header as='h1' textAlign='center' color='blue'>Sua Lista de Desejos está Vazio!</Header>
-    );
-
+    return null;
 }
-export default ListaDesejosComponent;
+
+export default ItensLoja;

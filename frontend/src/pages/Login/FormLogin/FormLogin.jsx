@@ -3,7 +3,7 @@ import axios from 'axios';
 import StoreContext from '../../../components/store/Context';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Input, Label } from 'semantic-ui-react';
-import './Login.css';
+import './FormLogin.css';
 import roleNames from '../../../utils/permissionLevel';
 import { Api } from '../../../utils/apiData';
 
@@ -49,7 +49,7 @@ async function retornaUsuario ( username ) {
     }
 }
 
-const UserLogin = () => {
+const FormLogin = () => {
     const [ values, setValues ] = useState( initialState );
     const [ showError, setShowError ] = useState( false );
     const { setToken, setRole, setCarrinho, setUsuario } = useContext( StoreContext );
@@ -87,7 +87,7 @@ const UserLogin = () => {
     }
 
     function onClick () {
-        return history.push( '/cadastro' );
+        return history.push( '/cadastroUsuario' );
     }
 
     return (
@@ -112,4 +112,4 @@ const UserLogin = () => {
     );
 };
 
-export default UserLogin;
+export default FormLogin;

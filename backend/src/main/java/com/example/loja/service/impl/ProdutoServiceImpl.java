@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
 
     @Autowired
     public ProdutoServiceImpl(ProdutoRepository produtoRepository) {

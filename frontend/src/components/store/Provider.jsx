@@ -14,20 +14,13 @@ const StoreProvider = ( { children } ) => {
     return (
         <Context.Provider
             value={ {
-                token,
-                setToken,
-                role,
-                setRole,
-                usuario,
-                setUsuario,
-                produtos,
-                setProdutos,
-                carrinho,
-                setCarrinho,
-                listaDesejos,
-                setListaDesejos,
-                logoutRealizado,
-                setLogoutRealizado,
+                token, setToken,
+                role, setRole,
+                usuario, setUsuario,
+                produtos, setProdutos,
+                carrinho, setCarrinho,
+                listaDesejos, setListaDesejos,
+                logoutRealizado, setLogoutRealizado,
             } }
         >
             {children }

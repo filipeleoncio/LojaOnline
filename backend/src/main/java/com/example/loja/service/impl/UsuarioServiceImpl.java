@@ -13,20 +13,11 @@ import java.util.List;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
-    //private final ProdutoRepository produtoRepository;
 
     @Autowired
     public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
-
-    /*
-    @Autowired
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, ProdutoRepository produtoRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.produtoRepository = produtoRepository;
-    }
-    */
 
     @Override
     public Usuario consultarUsuarioPorNome(String username){

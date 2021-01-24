@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Menu } from 'semantic-ui-react';
 import roleNames from '../../utils/permissionLevel';
 import StoreContext from '../store/Context';
-import MenuItemCustom from './MenuItemCustom';
+import ItemMenu from './ItemMenu/ItemMenu';
 
 const PageHeader = () => {
     const { role } = useContext( StoreContext );
@@ -21,11 +21,12 @@ const PageHeader = () => {
 
     return (
         <Menu widths={ 4 }>
-            <MenuItemCustom path='/' input='Loja' />
-            <MenuItemCustom path='/perfil' input='Usuário' />
-            <MenuItemCustom path='/gerenciar' input='Admin' />
-            <MenuItemCustom path={ menuPathLogin() } input={ menuInputLogin() } />
+            <ItemMenu path='/' input='Loja' />
+            <ItemMenu path='/perfil' input='Usuário' />
+            <ItemMenu path='/gerenciar' input='Admin' />
+            <ItemMenu path={ menuPathLogin() } input={ menuInputLogin() } />
         </Menu>
+        ///dimmer
     );
 }
 

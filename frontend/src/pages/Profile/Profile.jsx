@@ -17,7 +17,6 @@ const PagesProfile = () => {
             <Header as='h1' textAlign='center'>Pagina do Usuario</Header>
             <Button onClick={ () => onButtonClick( '/perfil/carrinho' ) }>Carrinho de Compras</Button>
             <Button onClick={ () => onButtonClick( '/perfil/listaDesejos' ) }>Lista de Desejos</Button>
-
         </PageCenter>
     );
 }

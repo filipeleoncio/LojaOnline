@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid, GridColumn, GridRow, Header, Item, Image, Button } from 'semantic-ui-react';
-import { Api } from '../../utils/apiData';
-import ItemDimmer from '../ItemDimmer/ItemDimmer';
-import StoreContext from '../store/Context';
-import './CarrinhoCompras.css';
+import { Api } from '../../../utils/apiData';
+import ItemDimmer from '../../../components/ItemDimmer/ItemDimmer';
+import StoreContext from '../../../components/store/Context';
+import './ItensCarrinho.css'
 
-const CarrinhoCompras = () => {
+const ItensCarrinho = () => {
     const { carrinho, setCarrinho, produtos } = useContext( StoreContext );
     const [ itemDimmer, setItemDimmer ] = useState( [] );
 
@@ -155,4 +155,4 @@ const CarrinhoCompras = () => {
     );
 };
 
-export default CarrinhoCompras;
+export default ItensCarrinho;

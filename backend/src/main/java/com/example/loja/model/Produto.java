@@ -41,7 +41,6 @@ public class Produto {
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.file = file;
-        //this.imgSrc = "data:image/jpeg;base64," + Arrays.toString(file);
     }
 
     public Integer getQuantidade() {
@@ -84,7 +83,6 @@ public class Produto {
         this.preco = preco;
     }
 
-
     public Integer getQtdCarrinho() {
         return qtdCarrinho;
     }
@@ -92,7 +90,6 @@ public class Produto {
     public void setQtdCarrinho(Integer qtdCarrinho) {
         this.qtdCarrinho = qtdCarrinho;
     }
-
 
     public byte[] getFile() {
         return file;
