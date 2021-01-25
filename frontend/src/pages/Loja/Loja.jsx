@@ -7,13 +7,11 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 
 const PagesHome = () => {
     return (
-        <div>
-            <PageCenter>
-                <PageHeader />
-                <Header className='homeTitle' as="h1">Loja</Header>
-                <ItensLoja />
-            </PageCenter>
-        </div>
+        <PageCenter>
+            <PageHeader />
+            <Header textAlign='center' as="h1">Loja</Header>
+            <ItensLoja />
+        </PageCenter>
     );
 }
 export default PagesHome;

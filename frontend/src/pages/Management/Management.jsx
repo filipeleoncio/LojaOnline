@@ -1,5 +1,4 @@
 import React from 'react';
-// import StoreContext from '../../components/store/Context'
 import { useHistory } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
 import PageCenter from '../../components/PageCenter/PageCenter'
@@ -17,7 +16,7 @@ const PagesManagement = () => {
             <PageHeader />
             <Header as='h1' textAlign='center'>Pagina de gerenciamento</Header>
             <Button onClick={ () => onSubmit( '/cadastroUsuario' ) }>Cadastrar Usuário</Button>
-            < Button onClick={ () => onSubmit( '/cadastroProduto' ) }>Cadastrar Produto</Button>
+            <Button onClick={ () => onSubmit( '/cadastroProduto' ) }>Cadastrar Produto</Button>
         </PageCenter >
     );
 }

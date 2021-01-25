@@ -147,7 +147,7 @@ const ItensLista = () => {
         return false;
     }
 
-    if ( listaDesejos ) {
+    if ( listaDesejos.length > 0 ) {
         return (
             <Grid>
                 {listaDesejos.map( ( prod, index ) => (

@@ -71,7 +71,6 @@ const ItensCarrinho = () => {
             throw err;
         }
         setCarrinho( [] );
-        console.log( "Pedido finalizado" );
     }
 
     function calculaTotal () {
