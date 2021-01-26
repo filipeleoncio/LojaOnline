@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Grid, GridColumn, GridRow, Header, Item, Image, Button } from 'semantic-ui-react';
 import { Api } from '../../../utils/apiData';
+import exibePreco from '../../../utils/functions/exibePreco'
 import ItemDimmer from '../../../components/ItemDimmer/ItemDimmer';
 import StoreContext from '../../../components/store/Context';
 import './ItensCarrinho.css'
@@ -61,6 +62,9 @@ const ItensCarrinho = () => {
         setCarrinho( [ ...carrinho ] );
     }
 
+    /**
+     * @Summary Finaliza o pedido dando baixa da quantidade comprada no banco
+     */
     async function finalizarPedido () {
         try {
             await axios.put( Api.url + Api.produto, carrinho );
@@ -73,6 +77,9 @@ const ItensCarrinho = () => {
         setCarrinho( [] );
     }
 
+    /**
+     * @Summary Calula o valor total do carrinho
+     */
     function calculaTotal () {
         let total = 0;
 
@@ -100,7 +107,7 @@ const ItensCarrinho = () => {
                                     <Item.Content>
                                         <Item.Header>{ carrinhoItem.nome }</Item.Header>
                                         <Item.Description>{ carrinhoItem.descricao }</Item.Description>
-                                        <Item.Meta>Preço: { carrinhoItem.preco }</Item.Meta>
+                                        <Item.Meta>Preço: { exibePreco( carrinhoItem.preco ) }</Item.Meta>
                                         <Item.Extra>Quantidade disponível: { carrinhoItem.quantidade }</Item.Extra>
                                     </Item.Content>
                                 </Item>
@@ -130,7 +137,7 @@ const ItensCarrinho = () => {
                         <GridColumn width={ 3 }>
                             <div className='centered'>
                                 <Header as='h4'>Sub-Total</Header>
-                                <Header as='h3' className='displaySubtotal'>R$: { carrinhoItem.preco * carrinhoItem.qtdCarrinho }</Header>
+                                <Header as='h3' className='displaySubtotal'>{ exibePreco( carrinhoItem.preco * carrinhoItem.qtdCarrinho ) }</Header>
                             </div>
                         </GridColumn>
                     </ItemDimmer>
@@ -138,7 +145,7 @@ const ItensCarrinho = () => {
                 }
                 <GridRow>
                     <GridColumn>
-                        <Header textAlign='right' as='h1'>Total da Compra: R$ { calculaTotal() }</Header>
+                        <Header textAlign='right' as='h1'>Total da Compra: { exibePreco( calculaTotal() ) }</Header>
                     </GridColumn>
                 </GridRow>
                 <GridRow>

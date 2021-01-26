@@ -7,6 +7,10 @@ import './FormLogin.css';
 import roleNames from '../../../utils/permissionLevel';
 import { Api } from '../../../utils/apiData';
 
+/**
+ * @Summary Retorna o código associado a role
+ * @param role role corresponte
+ */
 function getRoleCode ( role ) {
     switch ( role ) {
         case "USER":
@@ -18,10 +22,19 @@ function getRoleCode ( role ) {
     }
 }
 
+/**
+ * @Summary Valores iniciais dos inputs
+ */
 function initialState () {
     return { user: '', password: '' };
 }
 
+
+/**
+ * @Summary Autentica o login
+ * @param user Usuário
+ * @param password Senha
+ */
 async function verificaLogin ( { user, password } ) {
     let dataLogin = {
         "username": user,
@@ -38,6 +51,10 @@ async function verificaLogin ( { user, password } ) {
     }
 }
 
+/**
+ * @Summary Retorna os dados do usuário
+ * @param username Nome do usuário correspondente
+ */
 async function retornaUsuario ( username ) {
     try {
         return await axios.get( Api.url + Api.buscaUsuarioPorNome( username ) );
@@ -55,6 +72,10 @@ const FormLogin = () => {
     const { setToken, setRole, setCarrinho, setUsuario } = useContext( StoreContext );
     const history = useHistory();
 
+    /**
+     * @Summary Lida com a mudança dos inputs
+     * @param event
+     */
     function onChange ( event ) {
         const { value, name } = event.target;
 
@@ -65,6 +86,10 @@ const FormLogin = () => {
         setShowError( false );
     }
 
+    /**
+     * @Summary Lida com o submit do formulário
+     * @param event
+     */
     async function onSubmit ( event ) {
         event.preventDefault();
 
@@ -86,6 +111,9 @@ const FormLogin = () => {
         setValues( initialState );
     }
 
+    /**
+     * @Summary Lida com o clique no botão de cadastro
+     */
     function onClick () {
         return history.push( '/cadastroUsuario' );
     }

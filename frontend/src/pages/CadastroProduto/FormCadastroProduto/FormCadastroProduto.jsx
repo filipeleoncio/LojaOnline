@@ -44,6 +44,10 @@ const FormCadastroProduto = ( { values, setValues, setActiveDimmer } ) => {
         atualizaCheck();
     }, [ values.nome ] );
 
+    /**
+     * @Summary lida com a mudança no input
+     * @param event
+     */
     function onChange ( event ) {
         const { value, name } = event.target;
 
@@ -53,10 +57,17 @@ const FormCadastroProduto = ( { values, setValues, setActiveDimmer } ) => {
         } );
     }
 
+    /**
+     * @Summary lida com a mudança no upload de arquivo
+     * @param event
+     */
     function onChangeFile ( event ) {
         setImg( event.target.files[ 0 ] );
     }
 
+    /**
+     * @Summary lida com o submite do formulário
+     */
     async function onSubmit () {
 
         /**
@@ -103,7 +114,7 @@ const FormCadastroProduto = ( { values, setValues, setActiveDimmer } ) => {
                 </Form.Field>
             </Form.Group>
             <Form.Field
-                control={ Input } label='Preço' placeholder='Preço'
+                control={ Input } label='Preço' placeholder='Ex: 1000.00'
                 name='preco' onChange={ onChange } value={ values.preco } required
             />
             <Form.Field

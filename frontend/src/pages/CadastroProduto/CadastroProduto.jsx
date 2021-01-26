@@ -5,6 +5,9 @@ import PageCenter from '../../components/PageCenter/PageCenter'
 import PageHeader from '../../components/PageHeader/PageHeader';
 import FormCadastroProduto from './FormCadastroProduto/FormCadastroProduto';
 
+/**
+ * @Summary Valores iniciais para os inputs
+ */
 function initialStateValues () {
     return {
         nome: '',

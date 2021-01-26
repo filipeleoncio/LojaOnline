@@ -7,7 +7,11 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 const PagesManagement = () => {
     const history = useHistory();
 
-    function onSubmit ( path ) {
+    /**
+     * @Summary Lida com o clique dos botões
+     * @param path caminho da página para qual sera redirecionado
+     */
+    function onButtonClick ( path ) {
         return history.push( path );
     }
 
@@ -15,8 +19,8 @@ const PagesManagement = () => {
         <PageCenter>
             <PageHeader />
             <Header as='h1' textAlign='center'>Pagina de gerenciamento</Header>
-            <Button onClick={ () => onSubmit( '/cadastroUsuario' ) }>Cadastrar Usuário</Button>
-            <Button onClick={ () => onSubmit( '/cadastroProduto' ) }>Cadastrar Produto</Button>
+            <Button onClick={ () => onButtonClick( '/cadastroUsuario' ) }>Cadastrar Usuário</Button>
+            <Button onClick={ () => onButtonClick( '/cadastroProduto' ) }>Cadastrar Produto</Button>
         </PageCenter >
     );
 }

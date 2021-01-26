@@ -11,7 +11,6 @@ const PagesListaDesjeos = () => {
             <Header as='h1' textAlign='center'>Lista de Desejos</Header>
             <ItensLista />
         </PageCenter>
-
     );
 }
 

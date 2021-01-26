@@ -7,6 +7,7 @@ import { imgBase } from '../../../utils/imgBase';
 import { If } from '../../../components/If/If';
 import ItemDimmer from '../../../components/ItemDimmer/ItemDimmer';
 import StoreContext from '../../../components/store/Context';
+import exibePreco from '../../../utils/functions/exibePreco';
 
 const ItensLista = () => {
     const [ itemDimmer, setItemDimmer ] = useState( [] );
@@ -77,9 +78,14 @@ const ItensLista = () => {
         return false;
     }
 
+    /**
+     * @Summary Adiciona um produto no carrinho
+     * @param prod produto escolhido
+     */
     function adicionaCarrinho ( prod ) {
 
         const prodEscolhido = produtos.find( ( produto ) => produto.id === prod.id );
+        const qtdMax = prodEscolhido.quantidade;
 
         /**
          * @Summary Produto escolhido pelo cliente a ser inserido no carrinho
@@ -96,16 +102,16 @@ const ItensLista = () => {
         if ( carrinho.length > 0 ) {
             const produtoJaNoCarrinho = carrinho.find( ( produto ) => produto.id === prodEscolhido.id );
             if ( produtoJaNoCarrinho ) {
-                produtoJaNoCarrinho.incrementaNoCarrinho();
+                produtoJaNoCarrinho.incrementaNoCarrinho( qtdMax );
                 setCarrinho( [ ...carrinho ] );
             }
             else {
-                produtoInserido.incrementaNoCarrinho();
+                produtoInserido.incrementaNoCarrinho( qtdMax );
                 setCarrinho( [ ...carrinho, produtoInserido ] );
             }
         }
         else {
-            produtoInserido.incrementaNoCarrinho();
+            produtoInserido.incrementaNoCarrinho( qtdMax );
             setCarrinho( [ ...carrinho, produtoInserido ] );
         }
     }
@@ -140,6 +146,10 @@ const ItensLista = () => {
         }
     }
 
+    /**
+     * @Summary Verifica se o produto escolhido está disponivel no estoque
+     * @param prod produto escolhido
+     */
     function produtoDisponivel ( prod ) {
         const produto = produtos.find( ( item ) => item.id === prod.id )
         if ( produto.quantidade > 0 )
@@ -167,7 +177,7 @@ const ItensLista = () => {
                                     <Item.Content>
                                         <Item.Header>{ prod.nome }</Item.Header>
                                         <Item.Description>{ prod.descricao }</Item.Description>
-                                        <Item.Meta>Preço: { prod.preco }</Item.Meta>
+                                        <Item.Meta>Preço: { exibePreco( prod.preco ) }</Item.Meta>
                                         <Item.Extra>Quantidade disponível: { prod.quantidade }</Item.Extra>
                                     </Item.Content>
                                 </Item>

@@ -117,6 +117,9 @@ const FormCadastroU = ( { setActiveDimmer } ) => {
         } );
     }
 
+    /**
+     * @Summary Lida com o submit do formulário
+     */
     async function onSubmit () {
         const valido = await formularioValido( values.userName, values.email, values.password, values.passwordC );
         if ( !valido ) {

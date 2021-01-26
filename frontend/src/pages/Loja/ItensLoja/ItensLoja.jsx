@@ -8,6 +8,7 @@ import BotoesLoja from '../../../components/BotoesLoja/BotoesLoja';
 import ItemDimmer from '../../../components/ItemDimmer/ItemDimmer';
 import StoreContext from '../../../components/store/Context';
 import './ItensLoja.css';
+import exibePreco from '../../../utils/functions/exibePreco';
 
 const ItensLoja = () => {
     const { carrinho, setCarrinho } = useContext( StoreContext );
@@ -80,11 +81,15 @@ const ItensLoja = () => {
         return false;
     }
 
-
+    /**
+     * @Summary Adiciona um produto no carrinho
+     * @param prod produto escolhido
+     */
     function adicionaCarrinho ( prod ) {
 
         const prodEscolhido = produtos.find( ( produto ) => produto.id === prod.id );
         const qtdMax = prodEscolhido.quantidade;
+
         /**
          * @Summary Produto escolhido pelo cliente a ser inserido no carrinho
          */
@@ -114,6 +119,10 @@ const ItensLoja = () => {
         }
     }
 
+    /**
+     * @Summary Adiciona o produto na lista de desejos
+     * @param prod produto correspondente
+     */
     async function adicionaListaDesejos ( prod ) {
         let formData = new FormData();
         formData.append( 'username', usuario.userName );
@@ -176,7 +185,7 @@ const ItensLoja = () => {
                                     <Item.Content>
                                         <Item.Header>{ prod.nome }</Item.Header>
                                         <Item.Description>{ prod.descricao }</Item.Description>
-                                        <Item.Meta>Preço: { prod.preco }</Item.Meta>
+                                        <Item.Meta>Preço: { exibePreco( prod.preco ) }</Item.Meta>
                                         <Item.Extra>Quantidade disponível: { prod.quantidade }</Item.Extra>
                                     </Item.Content>
                                 </Item>
@@ -194,7 +203,7 @@ const ItensLoja = () => {
                 ) )
                 }
             </Grid >
-        )
+        );
     }
     return null;
 }

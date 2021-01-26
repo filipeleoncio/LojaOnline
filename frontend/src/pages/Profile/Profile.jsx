@@ -7,6 +7,10 @@ import PageHeader from '../../components/PageHeader/PageHeader';
 const PagesProfile = () => {
     const history = useHistory();
 
+    /**
+     * @Summary Lida com o clique dos botões
+     * @param path caminho da página para qual sera redirecionado
+     */
     function onButtonClick ( path ) {
         return history.push( path );
     }
