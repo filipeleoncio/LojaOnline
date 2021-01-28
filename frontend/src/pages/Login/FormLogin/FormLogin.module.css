@@ -4,19 +4,16 @@
     margin-bottom: 10px;
 }
 
-.user-login_button{
+.loginButton{
     text-align: center;
 }
 
-.centralize {
-    text-align: center;
-}
-
-p{
+.fazerCadastro {
     color: rgb(74, 74, 255);
+    text-align: center;
 }
 
-p:hover{
+.fazerCadastro:hover{
     color: green;
     cursor: pointer;
 }

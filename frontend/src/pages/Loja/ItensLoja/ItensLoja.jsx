@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { Grid, GridColumn, Item, Image } from 'semantic-ui-react';
 import Produto from '../../../classes/Produto';
 import { Api } from '../../../utils/apiData';
@@ -18,44 +18,46 @@ const ItensLoja = () => {
     const [ itemDimmer, setItemDimmer ] = useState( [] );
     const [ update, setUpdate ] = useState( false );
 
-    useEffect( () => {
-        /**
-         * @Summary Busca os produtos no banco e seta a variavel
-         * responsável pelo dimmer de cada item da loja
-         */
-        const fetchDataProdutos = async () => {
-            try {
-                const res = await axios.get( Api.url + Api.produto );
-                const resProdutos = res.data;
-                let itens = [];
-                const listaProdutos = resProdutos.map( ( produto ) => {
+    /**
+     * @Summary Busca os produtos no banco e seta a variavel
+     * responsável pelo dimmer de cada item da loja
+     */
+    const fetchDataProdutos = useCallback( async () => {
+        try {
+            const res = await axios.get( Api.url + Api.produto );
+            const resProdutos = res.data;
+            let itens = [];
+            const listaProdutos = resProdutos.map( ( produto ) => {
 
-                    const prodObj = new Produto(
-                        produto.produtoId,
-                        produto.nome,
-                        produto.preco,
-                        imgBase + produto.file,
-                        produto.descricao,
-                        produto.quantidade
-                    );
-                    itens = [ ...itens, {
-                        'id': produto.produtoId,
-                        'res': false
-                    } ];
-                    return prodObj;
-                } );
-                setProdutos( listaProdutos );
-                setItemDimmer( itens );
-                setUpdate( false );
-            }
-            catch ( err ) {
-                const error = 'Erro app -> buscandoProdutos; Erro: ' + err;
-                console.log( error );
-                throw err;
-            }
-        };
+                const prodObj = new Produto(
+                    produto.produtoId,
+                    produto.nome,
+                    produto.preco,
+                    imgBase + produto.file,
+                    produto.descricao,
+                    produto.quantidade
+                );
+                itens = [ ...itens, {
+                    'id': produto.produtoId,
+                    'res': false
+                } ];
+                return prodObj;
+            } );
+            setProdutos( listaProdutos );
+            setItemDimmer( itens );
+            setUpdate( false );
+        }
+        catch ( err ) {
+            const error = 'Erro app -> buscandoProdutos; Erro: ' + err;
+            console.log( error );
+            throw err;
+        }
+    }, [ setProdutos ]
+    )
+
+    useEffect( () => {
         fetchDataProdutos();
-    }, [ setProdutos, update ] );
+    }, [ fetchDataProdutos, update ] );
 
     /**
      * @Summary Atualiza o dimmer do item na loja de acordo com o status

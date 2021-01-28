@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Grid, GridColumn, Item, Image, Header, Button } from 'semantic-ui-react';
 import Produto from '../../../classes/Produto';
 import { Api } from '../../../utils/apiData';
@@ -15,44 +15,45 @@ const ItensLista = () => {
     const [ update, setUpdate ] = useState( false );
     const { usuario, produtos, carrinho, setCarrinho } = useContext( StoreContext );
 
-    useEffect( () => {
-        /**
-         * @Summary Busca os produtos no banco e seta a variavel
-         * responsável pelo dimmer de cada item da lista de desejos
-         */
-        const fetchDataListaDesejos = async ( usuario ) => {
-            try {
-                const res = await axios.get( Api.url + Api.listaDesejos( usuario.userName ) );
-                const resDesejos = res.data;
-                let itens = [];
-                const listaDesejos = resDesejos.map( ( produto ) => {
+    /**
+     * @Summary Busca os produtos no banco e seta a variavel
+     * responsável pelo dimmer de cada item da lista de desejos
+     */
+    const fetchDataListaDesejos = useCallback( async ( usuario ) => {
+        try {
+            const res = await axios.get( Api.url + Api.listaDesejos( usuario.userName ) );
+            const resDesejos = res.data;
+            let itens = [];
+            const listaDesejos = resDesejos.map( ( produto ) => {
 
-                    const prodObj = new Produto(
-                        produto.produtoId,
-                        produto.nome,
-                        produto.preco,
-                        imgBase + produto.file,
-                        produto.descricao,
-                        produto.quantidade
-                    );
-                    itens = [ ...itens, {
-                        'id': produto.produtoId,
-                        'res': false
-                    } ];
-                    return prodObj;
-                } );
-                setListaDesejos( listaDesejos );
-                setItemDimmer( itens );
-                setUpdate( false );
-            }
-            catch ( err ) {
-                const error = 'Erro app -> buscandoListaDesejos; Erro: ' + err;
-                console.log( error );
-                throw err;
-            }
-        };
+                const prodObj = new Produto(
+                    produto.produtoId,
+                    produto.nome,
+                    produto.preco,
+                    imgBase + produto.file,
+                    produto.descricao,
+                    produto.quantidade
+                );
+                itens = [ ...itens, {
+                    'id': produto.produtoId,
+                    'res': false
+                } ];
+                return prodObj;
+            } );
+            setListaDesejos( listaDesejos );
+            setItemDimmer( itens );
+            setUpdate( false );
+        }
+        catch ( err ) {
+            const error = 'Erro app -> buscandoListaDesejos; Erro: ' + err;
+            console.log( error );
+            throw err;
+        }
+    }, [ setListaDesejos ] );
+
+    useEffect( () => {
         fetchDataListaDesejos( usuario );
-    }, [ setListaDesejos, update, usuario ] );
+    }, [ fetchDataListaDesejos, update, usuario ] );
 
     /**
      * @Summary Atualiza o dimmer do item na lista de desejos de acordo com o status

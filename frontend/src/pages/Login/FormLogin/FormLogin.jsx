@@ -3,7 +3,7 @@ import axios from 'axios';
 import StoreContext from '../../../components/store/Context';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Input, Label } from 'semantic-ui-react';
-import './FormLogin.css';
+import cn from './FormLogin.module.css';
 import roleNames from '../../../utils/permissionLevel';
 import { Api } from '../../../utils/apiData';
 
@@ -130,10 +130,10 @@ const FormLogin = () => {
                 type='password' onChange={ onChange } value={ values.password }
                 error={ showError && <Label content='Usuario ou senha incorretos' /> }
             />
-            <Form.Field className="centralize">
+            <Form.Field className={ cn.fazerCadastro }>
                 <p onClick={ onClick } >Não possui uma conta? Faça seu cadastro</p>
             </Form.Field>
-            <Form.Field className="user-login_button"
+            <Form.Field className={ cn.loginButton }
                 control={ Button } type='submit' content='Entrar'
             />
         </Form>
